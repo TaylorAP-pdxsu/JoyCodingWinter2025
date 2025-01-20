@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE student PUBLIC "-//Joy of Coding at PSU//DTD Grade Book//EN" "http://www.cs.pdx.edu/~whitlock/dtds/gradebook.dtd">
+<student enrolled-section="graduate">
+<id>tapet2</id>
+<firstName>Taylor</firstName>
+<lastName>Pettingill</lastName>
+<email>tapet2@pdx.edu</email>
+<major>CS</major>
+<github-user-name>null</github-user-name>
+</student>
