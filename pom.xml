@@ -20,6 +20,7 @@ accordingly
   <url>http://YourGitHubUserInLowerCase.github.io/JoyOfCodingWinter2025</url>
   <modules>
     <module>koans</module>
+    <module>airline</module>
   </modules>
   <inceptionYear>2025</inceptionYear>
   <organization>
