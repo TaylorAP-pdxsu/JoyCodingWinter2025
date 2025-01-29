@@ -15,7 +15,7 @@ public class Project1 {
   static boolean isValidArgs(String[] args) {
     if(args.length == 0)
     {
-      System.err.println("ERROR: No argmuents were entered...");
+      System.err.println("Missing command line arguments");
       return false;
     }
     if(args.length > 8)
