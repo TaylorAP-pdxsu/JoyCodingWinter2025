@@ -8,7 +8,7 @@ public class Flight extends AbstractFlight {
   private String departTime;
   private String destAirport;
   private String arrivalTime;
-  
+
   public Flight() {}
 
   public Flight(int flightNum,
@@ -24,7 +24,7 @@ public class Flight extends AbstractFlight {
 
   @Override
   public int getNumber() {
-    return 42;
+    return flightNum;
   }
 
   @Override
@@ -36,6 +36,7 @@ public class Flight extends AbstractFlight {
   @Override
   public String getDepartureString() {
     return departTime;
+    //throw new UnsupportedOperationException("This method is not implemented yet");
   }
 
   @Override
@@ -46,6 +47,7 @@ public class Flight extends AbstractFlight {
   //ignore
   @Override
   public String getArrivalString() {
-    throw new UnsupportedOperationException("This method is not implemented yet");
+    return arrivalTime;
+    //throw new UnsupportedOperationException("This method is not implemented yet");
   }
 }
