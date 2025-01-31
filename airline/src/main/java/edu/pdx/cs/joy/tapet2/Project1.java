@@ -61,6 +61,12 @@ public class Project1 {
     return startOfInfo;
   }
 
+  /**
+   * main launches our parser validation and creates a simple airline.
+   * It creates a Flight to add to the Airline object and then handles
+   * the options given by the user.
+   * @param args takes in input from the command line to be parsed.
+   */
   public static void main(String[] args) {
     int startOfInfo;
     try {

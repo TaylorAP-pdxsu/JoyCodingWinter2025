@@ -2,15 +2,33 @@ package edu.pdx.cs.joy.tapet2;
 
 import edu.pdx.cs.joy.AbstractFlight;
 
+/**
+ * <p>
+ * The Flight class contains the information for a single flight.
+ * Members include; flight number, departure airport, departure time,
+ *                  destination airport, and arrival time.
+ * </p>
+ */
 public class Flight extends AbstractFlight {
-  private int flightNum;
+  private int flightNum; //test comment
   private String sourceAirport;
   private String departTime;
   private String destAirport;
   private String arrivalTime;
 
+  /**
+   * Default constructor
+   */
   public Flight() {}
 
+  /**
+   * Argument constructor. Sets all members for Flight
+   * @param flightNum flight number
+   * @param sourceAirport departure airport
+   * @param departTime departure time
+   * @param destAirport destination airport
+   * @param arrivalTime arrival time
+   */
   public Flight(int flightNum,
                 String sourceAirport, String departTime,
                 String destAirport, String arrivalTime)
