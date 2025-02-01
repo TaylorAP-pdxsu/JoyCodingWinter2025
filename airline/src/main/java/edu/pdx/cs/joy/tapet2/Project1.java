@@ -103,9 +103,9 @@ public class Project1 {
       airline = new Airline(args[startOfInfo]);
       flight = new Flight(Integer.parseInt(args[startOfInfo+1]),
                                   args[startOfInfo+2],
-                                  args[startOfInfo+3] + args[startOfInfo+4],
+                                  args[startOfInfo+3] + " " + args[startOfInfo+4],
                                   args[startOfInfo+5],
-                                  args[startOfInfo+6] + args[startOfInfo+7]);  // Refer to one of Dave's classes so that we can be sure it is on the classpath
+                                  args[startOfInfo+6] + " " + args[startOfInfo+7]);  // Refer to one of Dave's classes so that we can be sure it is on the classpath
     //Will change Airline to have more proper input methodology in future
       airline.getFlights().add(flight);
 
