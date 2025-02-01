@@ -30,7 +30,7 @@ class Project1IT extends InvokeMainTestCase {
   @Test
   void printOptionPrintsFlightToStandardOut() {
     MainMethodResult result = 
-                      invokeMain("-print", "Icelandair", "13", "PDX", "9/8/2025 6:00", "ARN", "9/8/2025 19:00");
+                      invokeMain("-print", "Icelandair", "13", "PDX", "9/8/2025", "6:00", "ARN", "9/8/2025", "19:00");
     String expectedString = "Flight 13 departs PDX at 9/8/2025 6:00 arrives ARN at 9/8/2025 19:00";
     assertThat(result.getTextWrittenToStandardOut(), containsString(expectedString));
   }
