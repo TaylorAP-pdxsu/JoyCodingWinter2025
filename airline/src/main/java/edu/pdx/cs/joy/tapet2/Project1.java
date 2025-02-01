@@ -1,6 +1,17 @@
 package edu.pdx.cs.joy.tapet2;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.io.Resources;
+
+import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * The main class for the Airline Project
@@ -33,9 +44,12 @@ public class Project1 {
       }
     }
 
+    if(startOfInfo == args.length-1)
+      return startOfInfo;
+
     startOfInfo = i;
 
-    if(args.length > startOfInfo + 8)
+    if(args.length-1 < startOfInfo + 7)
     {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments given...");
     }
@@ -45,15 +59,15 @@ public class Project1 {
       throw new IllegalArgumentException("ERROR occured at argument " + (startOfInfo+1)
                                         + " with value => " + args[startOfInfo+1]);
     }
-    if(args[startOfInfo+2].length() > 3 || args[startOfInfo+2].matches("[a-zA-Z]"))
+    if(args[startOfInfo+2].length() != 3 || args[startOfInfo+2].matches("[a-zA-Z]"))
     {
-      System.err.println("\nERROR: Departure Airport Code is too long or contains number, please enter 3-letter code...");
+      System.err.println("\nERROR: Departure Airport Code is of incorrect length or contains number, please enter 3-letter code...");
       throw new IllegalArgumentException("ERROR occured at argument " + (startOfInfo+2)
                                         + " with value => " + args[startOfInfo+2]);
     }
-    if(args[startOfInfo+5].length() > 3 || args[startOfInfo+5].matches("a-zA-Z"))
+    if(args[startOfInfo+5].length() != 3 || args[startOfInfo+5].matches("a-zA-Z"))
     {
-      System.err.println("\nERROR: Arrival Airport Code is too long or contains number, please enter 3-letter code...");
+      System.err.println("\nERROR: Arrival Airport Code is of incorrect length or contains number, please enter 3-letter code...");
       throw new IllegalArgumentException("ERROR occured at argument " + (startOfInfo+5)
                                         + " with value => " + args[startOfInfo+5]);
     }
@@ -75,26 +89,52 @@ public class Project1 {
       System.err.println(e);
       System.err.println("\nPlease enter airline and flight information in format:"
                         + "\n(AIRLINE NAME) (FLIGHT NUMBER) (DEPARTURE AIRPORT CODE)"
-                        + " (DEPARTURE DATE & TIME) (ARRIVAL AIRPORT CODE) (ARRIVAL DATE & TIME)"
+                        + " (DEPARTURE DATE) (TIME) (ARRIVAL AIRPORT CODE) (ARRIVAL DATE) (TIME)"
                         + "\n\nDate should be formatted as MM/DD/YYYY"
                         + "\nTime should be formatted as HR:MM");
       return;
     }
-    Airline airline = new Airline(args[startOfInfo]);
-    Flight flight = new Flight(Integer.parseInt(args[startOfInfo+1]),
-                                args[startOfInfo+2],
-                                args[startOfInfo+3] + args[startOfInfo+4],
-                                args[startOfInfo+5],
-                                args[startOfInfo+6] + args[startOfInfo+7]);  // Refer to one of Dave's classes so that we can be sure it is on the classpath
     
+    Airline airline;
+    Flight flight;
+
+    if(startOfInfo != args.length-1)
+    {
+      airline = new Airline(args[startOfInfo]);
+      flight = new Flight(Integer.parseInt(args[startOfInfo+1]),
+                                  args[startOfInfo+2],
+                                  args[startOfInfo+3] + args[startOfInfo+4],
+                                  args[startOfInfo+5],
+                                  args[startOfInfo+6] + args[startOfInfo+7]);  // Refer to one of Dave's classes so that we can be sure it is on the classpath
     //Will change Airline to have more proper input methodology in future
-    airline.getFlights().add(flight);
-    if(args[0].equals("-print") || args[1].equals("-print"))
-      System.out.println(flight.toString());
+      airline.getFlights().add(flight);
+
+      if(args[0].equals("-print") || args[1].equals("-print"))
+        System.out.println(flight.toString());
+    }
     
     if(args[0].equals("-README") || args[1].equals("-README"))
     {
-      //do readme stuff
+      try {
+        String resourcePath = Project1.class.getClassLoader().getResource("../resources/README.txt").getPath();
+        Path filePath = Paths.get(resourcePath, "README.txt");
+        File readme = new File(filePath.toString());
+        if(!readme.exists())
+        {
+          readme.createNewFile();
+        }
+        String readMeString = "Taylor A. Pettingill"
+                              + "\nProject 1"
+                              + "\nThis is a project for the class The Joy of Coding with Java."
+                              + "\nThis project contains a Airline and Flight class and currently"
+                              + "\ntakes in input from the command line and outputs its information."
+                              + "\nCommand line formatting:"
+                              + "\n(AIRLINE NAME) (FLIGHT NUMBER) (DEPARTURE AIRPORT CODE)"
+                              + " (DEPARTURE DATE & TIME) (ARRIVAL AIRPORT CODE) (ARRIVAL DATE & TIME)";
+        Files.write(filePath, readMeString.getBytes());
+      } catch (IOException e) {
+        System.err.println("README not properly read or output...");
+      }
     }
     /*for (String arg : args) {
       System.out.println(arg);
