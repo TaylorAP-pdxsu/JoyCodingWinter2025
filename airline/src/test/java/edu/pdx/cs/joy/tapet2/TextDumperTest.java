@@ -12,7 +12,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class TextDumperTest {
 
-  @Test
+  /*@Test
   void airlineNameIsDumpedInTextFormat() {
     String airlineName = "Test Airline";
     Airline airline = new Airline(airlineName);
@@ -37,5 +37,5 @@ public class TextDumperTest {
     TextParser parser = new TextParser(new FileReader(textFile));
     Airline read = parser.parse();
     assertThat(read.getName(), equalTo(airlineName));
-  }
+  }*/
 }

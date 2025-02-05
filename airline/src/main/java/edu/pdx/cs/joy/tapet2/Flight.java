@@ -68,4 +68,15 @@ public class Flight extends AbstractFlight {
     return arrivalTime;
     //throw new UnsupportedOperationException("This method is not implemented yet");
   }
+
+  public String getFlightText()
+  {
+    return new String(
+      "Flight Number: " + flightNum
+      + "\nDeparture Airport: " + sourceAirport
+      + "\nDeparture Time: " + departTime
+      + "\nDestination Airport: " + destAirport
+      + "\nDestination Time: " + arrivalTime
+    );
+  }
 }

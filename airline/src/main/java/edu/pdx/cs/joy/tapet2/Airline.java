@@ -47,4 +47,14 @@ public class Airline extends AbstractAirline<Flight> {
   public Collection<Flight> getFlights() {
     return flights;
   }
+
+  public String getFlightsText()
+  {
+    String output = new String();
+    for(Flight flight : flights)
+    {
+      output += "\n\n" + flight.getFlightText();
+    }
+    return output;
+  }
 }
