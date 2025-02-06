@@ -48,7 +48,7 @@ public class Project1 {
       return startOfInfo;
 
     startOfInfo = i;
-
+    //done
     if(args.length-1 < startOfInfo + 7)
     {
       throw new IllegalArgumentException("ERROR: Incorrect number of arguments given...");
