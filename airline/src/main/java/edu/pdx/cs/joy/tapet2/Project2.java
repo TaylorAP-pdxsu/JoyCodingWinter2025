@@ -29,7 +29,7 @@ public class Project2 {
             {
                 locFound = true;
                 filePathLoc = i+1;
-                i++;
+                ++i;
             }
             else
             {
