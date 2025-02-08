@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 class Project1IT extends InvokeMainTestCase {
 
     /**
-     * Invokes the main method of {@link Project1} with the given arguments.
+     * Invokes the main method of {@link Project2} with the given arguments.
      */
     private MainMethodResult invokeMain(String... args) {
         return invokeMain( Project1.class, args );
