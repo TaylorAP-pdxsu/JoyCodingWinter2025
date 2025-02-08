@@ -7,6 +7,7 @@ import java.io.*;
 
 import edu.pdx.cs.joy.ParserException;
 import edu.pdx.cs.joy.tapet2.Airline;
+import java.util.Scanner;
 
 public class Project2 {
     
@@ -65,10 +66,25 @@ public class Project2 {
         //create airline and input file
         try {
             File file = new File("./airOutput.txt");
-            TextDumper txtDump = new TextDumper(new PrintWriter(file));
-            txtDump.dump(airline);
+            TextDumper txtDump;
+            if(file.exists())
+            {
+                BufferedReader reader = new BufferedReader(new FileReader(file));
+                if(reader.readLine().contains(airline.getName()))
+                {
+                    txtDump = new TextDumper(new FileWriter(file.getPath(), true));
+                    txtDump.append(airline);
+                }
+            }
+            else
+            {
+                txtDump = new TextDumper(new PrintWriter(file));
+                txtDump.dump(airline);
+            }
         } catch (FileNotFoundException e) {
             System.err.println("ERROR: Output file not found...");
+        } catch (IOException e) {
+            System.err.println("ERROR: IOException on dump append() function.");
         }
 
         //output if -print

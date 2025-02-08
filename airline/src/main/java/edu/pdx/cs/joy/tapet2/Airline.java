@@ -50,7 +50,8 @@ public class Airline extends AbstractAirline<Flight> {
 
   public String getFlightsText()
   {
-    String output = new String("Airline: " + name);
+    //String output = new String("Airline: " + name);
+    String output = new String();
     for(Flight flight : flights)
     {
       output += "\n\n" + flight.getFlightText();
