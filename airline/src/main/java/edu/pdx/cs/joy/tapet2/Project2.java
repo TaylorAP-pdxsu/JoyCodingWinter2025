@@ -8,9 +8,8 @@ import java.io.*;
 import edu.pdx.cs.joy.ParserException;
 import edu.pdx.cs.joy.tapet2.Airline;
 import java.util.Scanner;
-
-import java.io.InputStream;
-import java.util.Scanner;
+import java.util.Vector;
+import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
 
 public class Project2 {
@@ -18,38 +17,60 @@ public class Project2 {
     private static boolean readMeFlag = false;
     private static boolean printFlag = false;
     private static int filePathLoc;
+    private static boolean textFileFound = false;
+    private static String[] flightArgs;
 
     private static void checkArgsOpts(String[] args)
     {
-        boolean locFound = false;
-        for(int i = 0; i < args.length; ++i)
+        if(args.length == 0)
         {
-            if(args[i].equals("-README"))
+            throw new IllegalArgumentException("ERROR: No command line args given.");
+        }
+        Vector<String> holdStr = new Vector<String>();
+        for(int i = 0, j = 0; i < args.length; ++i)
+        {
+            if(args[i].charAt(0) == '-')
             {
-                readMeFlag = true;
-                return;
-            }
-            if(args[i].equals("-print")) printFlag = true;
-            if(args[i].equals("-textFile") && locFound == false)
-            {
-                locFound = true;
-                filePathLoc = i+1;
-                ++i;
+                if(args[i].equals("-README"))
+                {
+                    readMeFlag = true;
+                    return;
+                }
+                else if(args[i].equals("-print")) printFlag = true;
+                else if(args[i].equals("-textFile") && textFileFound == false)
+                {
+                    textFileFound = true;
+                    filePathLoc = i+1;
+                    ++i;
+                }
+                else
+                {
+                    throw new IllegalArgumentException("\nERROR: Unknown command line option"
+                                                        + "\nOccured at argument " + i
+                                                        + "\nError Value: " + args[i]
+                                                        + "\nValid options include: -README, -print, and -textFile");
+                }
             }
             else
             {
-                throw new IllegalArgumentException("\nERROR: Unknown command line option"
-                                                    + "\nOccured at argument " + i
-                                                    + "\nError Value: " + args[i]
-                                                    + "\nValid options include: -README, -print, and -textFile");
+                holdStr.add(args[i]);
+                ++j;
             }
         }
+        flightArgs = holdStr.toArray(new String[holdStr.size()]);
     }
 
     public static void main(String[] args)
     {
         //check for opts
-        checkArgsOpts(args);
+        try {
+            checkArgsOpts(args);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage() + "\n" + helpMsg());
+            return;
+        }
+
+        //do README
         if(readMeFlag == true)
         {
             try {
@@ -62,30 +83,60 @@ public class Project2 {
             }
             return;
         }
-        //do parsing
+        //do textfile parsing
         Airline airline;
+        TextParser txtParser;
+        if(textFileFound == true)
+        {
+            try {
+                txtParser = new TextParser(new FileReader(new File(args[filePathLoc])));
+                airline = txtParser.parse();
+            } catch (FileNotFoundException e) {
+                System.err.println("ERROR: Input file not found");
+                return;
+            } catch (ParserException e) {
+                System.err.println("\nERROR: Parser exception..." + "\n--CAUSE-- " + e.getMessage() + "\n");
+                return;
+            }
+        }
+        else
+        {
+            airline = new Airline(flightArgs[0]);
+            txtParser = new TextParser(null);
+        }
         try {
-            TextParser txtParser = new TextParser(new FileReader(new File(args[filePathLoc])));
-            airline = txtParser.parse();
-        } catch (FileNotFoundException e) {
-            System.err.println("ERROR: Input file not found");
-            return;
+            if(airline.getName().equals(flightArgs[0]))
+            {
+                airline.addFlight(txtParser.parseFlight(Arrays.copyOfRange(flightArgs, 1, flightArgs.length)));
+            }
+            else
+            {
+                System.err.println("ERROR: Given airline name from command line does not match already existing output file."
+                                 + "\nFIX: Check that airline name on command line and input file matches the output file.");
+                return;
+            }
         } catch (ParserException e) {
             System.err.println("\nERROR: Parser exception..." + "\n--CAUSE-- " + e.getMessage() + "\n");
             return;
         }
 
-        //create airline and input file
+        //create airline and output file
         try {
             File file = new File("./airOutput.txt");
             TextDumper txtDump;
             if(file.exists())
             {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
-                if(reader.readLine().contains(airline.getName()))
+                if(reader.readLine().equals(airline.getName()))
                 {
                     txtDump = new TextDumper(new FileWriter(file.getPath(), true));
                     txtDump.append(airline);
+                }
+                else
+                {
+                    System.err.println("ERROR: Given airline name from input file does not match already existing output file."
+                                     + "\nFIX: Check that airline name on command line and input file matches the output file.");
+                    return;
                 }
             }
             else
@@ -102,8 +153,18 @@ public class Project2 {
         //output if -print
         if(printFlag == true)
         {
-            System.out.println(airline.getFlightsText());
+            System.out.println("\n" + airline.getName() + "\n" + airline.getNewFlightTxt());
         }
+    }
+
+    private static String helpMsg()
+    {
+        return "--HELP--"
+             + "\nPlease enter airline and flight information in format:"
+             + "\n(AIRLINE NAME) (FLIGHT NUMBER) (DEPARTURE AIRPORT CODE)"
+             + " (DEPARTURE DATE) (TIME) (ARRIVAL AIRPORT CODE) (ARRIVAL DATE) (TIME)"
+             + "\n\nDate should be formatted as MM/DD/YYYY"
+             + "\nTime should be formatted as HR:MM";
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class Airline extends AbstractAirline<Flight> {
   private final String name;
-  private Collection<Flight> flights;
+  private ArrayList<Flight> flights;
 
   /**
    * Default constructor
@@ -57,5 +57,10 @@ public class Airline extends AbstractAirline<Flight> {
       output += "\n\n" + flight.getFlightText();
     }
     return output;
+  }
+
+  public String getNewFlightTxt()
+  {
+    return flights.get(flights.size() - 1).getFlightText();
   }
 }

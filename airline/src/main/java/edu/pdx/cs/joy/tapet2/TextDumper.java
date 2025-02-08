@@ -4,13 +4,9 @@ import edu.pdx.cs.joy.AirlineDumper;
 
 import java.io.PrintWriter;
 import java.io.Writer;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
- * A skeletal implementation of the <code>TextDumper</code> class for Project 2.
+ * Outputs string to be writtern to a file.
  */
 public class TextDumper implements AirlineDumper<Airline> {
   private final Writer writer;
@@ -29,6 +25,10 @@ public class TextDumper implements AirlineDumper<Airline> {
       
   }
 
+  /**
+   * appends to end of file
+   * @param airline
+   */
   public void append(Airline airline) {
     try (PrintWriter pw = new PrintWriter(writer)) {
       pw.println(airline.getFlightsText());
