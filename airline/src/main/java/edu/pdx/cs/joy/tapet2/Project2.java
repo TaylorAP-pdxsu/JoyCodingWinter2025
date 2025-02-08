@@ -9,6 +9,10 @@ import edu.pdx.cs.joy.ParserException;
 import edu.pdx.cs.joy.tapet2.Airline;
 import java.util.Scanner;
 
+import java.io.InputStream;
+import java.util.Scanner;
+import java.nio.charset.StandardCharsets;
+
 public class Project2 {
     
     private static boolean readMeFlag = false;
@@ -48,7 +52,15 @@ public class Project2 {
         checkArgsOpts(args);
         if(readMeFlag == true)
         {
-            //do README stuff
+            try {
+                InputStream stream = Project2.class.getClassLoader().getResourceAsStream("edu/pdx/cs/joy/tapet2/README.txt");
+                Scanner scanner = new Scanner(stream, StandardCharsets.UTF_8.name());
+                System.out.println("\n" + scanner.useDelimiter("\\A").next() + "\n");
+                scanner.close();
+            } catch (NullPointerException e) {
+                System.err.println("ERROR: README path not found.");
+            }
+            return;
         }
         //do parsing
         Airline airline;
