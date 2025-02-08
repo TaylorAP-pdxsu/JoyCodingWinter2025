@@ -1,0 +1,26 @@
+Airline: KungenAir
+
+Flight Number: 1
+Departure Airport: PDX
+Departure Time: 09/08/2025 09:00
+Destination Airport: ARN
+Destination Time: 09/09/2025 00:00
+
+Flight Number: 2
+Departure Airport: PDX
+Departure Time: 11/12/1998 14:00
+Destination Airport: ARN
+Destination Time: 12/08/1998 05:00
+
+
+Flight Number: 1
+Departure Airport: PDX
+Departure Time: 09/08/2025 09:00
+Destination Airport: ARN
+Destination Time: 09/09/2025 00:00
+
+Flight Number: 2
+Departure Airport: PDX
+Departure Time: 11/12/1998 14:00
+Destination Airport: ARN
+Destination Time: 12/08/1998 05:00
