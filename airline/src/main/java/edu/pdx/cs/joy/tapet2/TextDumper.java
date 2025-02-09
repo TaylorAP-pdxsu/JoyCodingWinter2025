@@ -18,7 +18,7 @@ public class TextDumper implements AirlineDumper<Airline> {
   @Override
   public void dump(Airline airline) {
     try (PrintWriter pw = new PrintWriter(writer)) {
-        pw.println("Airline: " + airline.getName() + airline.getFlightsText());
+        pw.println(airline.getName() + airline.getFlightsText());
 
         pw.flush();
       }
