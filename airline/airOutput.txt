@@ -1,18 +1,10 @@
 Project2
 
-Flight Number: 700
+Flight Number: 456
 Departure Airport: PDX
-Departure Time: 01/07/2025 07:00
-Destination Airport: MHT
-Destination Time: 01/17/2025 17:00
-
-
-Flight Number: 700
-Departure Airport: PDX
-Departure Time: 01/07/2025 07:00
-Destination Airport: MHT
-Destination Time: 01/17/2025 17:00
-
+Departure Time: 01/02/2023 11:00
+Destination Airport: ARN
+Destination Time: 01/02/2023 07:00
 
 Flight Number: 123
 Departure Airport: PDX
