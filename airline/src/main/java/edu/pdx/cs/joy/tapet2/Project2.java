@@ -86,23 +86,21 @@ public class Project2 {
         //do textfile parsing
         Airline airline;
         TextParser txtParser;
+        airline = new Airline(flightArgs[0]);
+        txtParser = new TextParser(null);
         if(textFileFound == true)
         {
             try {
                 txtParser = new TextParser(new FileReader(new File(args[filePathLoc])));
                 airline = txtParser.parse();
             } catch (FileNotFoundException e) {
-                System.err.println("ERROR: Input file not found");
-                return;
+                System.err.println("ERROR: Input file not found..."
+                                    + "Continuing to read from command line with initialized null parser...");
+                //txtParser = new TextParser(null);
             } catch (ParserException e) {
                 System.err.println("\nERROR: Parser exception..." + "\n--CAUSE-- " + e.getMessage() + "\n");
                 return;
             }
-        }
-        else
-        {
-            airline = new Airline(flightArgs[0]);
-            txtParser = new TextParser(null);
         }
         try {
             if(airline.getName().equals(flightArgs[0]))
