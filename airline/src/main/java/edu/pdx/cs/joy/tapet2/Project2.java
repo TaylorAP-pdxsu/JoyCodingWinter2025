@@ -120,7 +120,7 @@ public class Project2 {
 
         //create airline and output file
         try {
-            File file = new File("./airOutput.txt");
+            File file = new File(args[filePathLoc]);
             TextDumper txtDump;
             if(file.exists())
             {
