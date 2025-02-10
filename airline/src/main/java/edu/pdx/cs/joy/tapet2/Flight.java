@@ -71,12 +71,7 @@ public class Flight extends AbstractFlight {
 
   public String getFlightText()
   {
-    return new String(
-      "Flight Number: " + flightNum
-      + "\nDeparture Airport: " + sourceAirport
-      + "\nDeparture Time: " + departTime
-      + "\nDestination Airport: " + destAirport
-      + "\nDestination Time: " + arrivalTime
-    );
+    return new String(flightNum + " " + sourceAirport + " " + departTime + " " 
+                        + destAirport + " " + arrivalTime);
   }
 }

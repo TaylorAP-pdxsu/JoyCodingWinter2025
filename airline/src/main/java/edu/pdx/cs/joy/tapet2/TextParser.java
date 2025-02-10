@@ -49,6 +49,7 @@ public class TextParser implements AirlineParser<Airline> {
       while((lineParse = br.readLine()) != null)
       {
         ++lineNum;
+        if(lineParse.isEmpty()) continue;
         String[] args = lineParse.split(" ");
         
         //check arg num
