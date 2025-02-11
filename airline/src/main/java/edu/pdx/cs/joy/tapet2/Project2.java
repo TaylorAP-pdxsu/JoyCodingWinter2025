@@ -18,6 +18,8 @@ public class Project2 {
     private static boolean printFlag = false;
     private static int filePathLoc;
     private static boolean textFileFound = false;
+    private static int prettyPathLoc;
+    private static boolean prettyFileFound = false;
     private static String[] flightArgs;
 
     private static void checkArgsOpts(String[] args)
@@ -41,6 +43,12 @@ public class Project2 {
                 {
                     textFileFound = true;
                     filePathLoc = i+1;
+                    ++i;
+                }
+                else if(args[i].equals("-pretty"))
+                {
+                    prettyFileFound = true;
+                    prettyPathLoc = i+1;
                     ++i;
                 }
                 else

@@ -2,6 +2,10 @@ package edu.pdx.cs.joy.tapet2;
 
 import edu.pdx.cs.joy.AbstractFlight;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+
 /**
  * <p>
  * The Flight class contains the information for a single flight.
@@ -9,12 +13,13 @@ import edu.pdx.cs.joy.AbstractFlight;
  *                  destination airport, and arrival time.
  * </p>
  */
-public class Flight extends AbstractFlight {
+public class Flight extends AbstractFlight implements Comparable<Flight>  {
   private int flightNum; //test comment
   private String sourceAirport;
   private String departTime;
   private String destAirport;
   private String arrivalTime;
+  private DateTimeFormatter dtFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf("SHORT"));
 
   /**
    * Default constructor
@@ -53,8 +58,7 @@ public class Flight extends AbstractFlight {
   //ignore
   @Override
   public String getDepartureString() {
-    return departTime;
-    //throw new UnsupportedOperationException("This method is not implemented yet");
+    return LocalDateTime.parse(departTime).format(dtFormat);
   }
 
   @Override
@@ -65,13 +69,18 @@ public class Flight extends AbstractFlight {
   //ignore
   @Override
   public String getArrivalString() {
-    return arrivalTime;
-    //throw new UnsupportedOperationException("This method is not implemented yet");
+    return LocalDateTime.parse(arrivalTime).format(dtFormat);
   }
 
   public String getFlightText()
   {
     return new String(flightNum + " " + sourceAirport + " " + departTime + " " 
                         + destAirport + " " + arrivalTime);
+  }
+
+  @Override
+  public int compareTo(Flight other)
+  {
+    return 0;
   }
 }

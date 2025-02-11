@@ -53,7 +53,7 @@ public class TextParser implements AirlineParser<Airline> {
         String[] args = lineParse.split(" ");
         
         //check arg num
-        if(args.length != 7) throw new ParserException("Incorrect number of arguments in input file at line " + lineNum);
+        if(args.length != 9) throw new ParserException("Incorrect number of arguments in input file at line " + lineNum);
         
         newAirline.addFlight(parseFlight(args));
       }
@@ -87,48 +87,50 @@ public class TextParser implements AirlineParser<Airline> {
    */
   public Flight parseFlight(String[] args) throws ParserException
   {
-    if(args.length > 7)
-      throw new ParserException(createExceptStr("Unknown args given after flight information.", ">8", args[7]
-                                                       , "Cannot contain more than 7 args after airline name."));
+    if(args.length > 9)
+      throw new ParserException(createExceptStr("Unknown args given after flight information.", ">9", args[7]
+                                                       , "Cannot contain more than 9 args after airline name."));
     //check flight num
     if(!args[0].matches("\\d+"))
-      throw new ParserException(createExceptStr("Flight number is not an integer.", "1", args[0]
+      throw new ParserException(createExceptStr("Flight number is not an integer.", "0", args[0]
                                                        , "Input must be a positive integer."));
     //check departure code
     if(args[1].length() != 3)
-      throw new ParserException(createExceptStr("Incorrect departure code length", "2", args[1]
+      throw new ParserException(createExceptStr("Incorrect departure code length", "1", args[1]
                                                        , "Departure code must be 3 alphabetical letters."));
     if(args[1].matches("[a-zA-Z]"))
-      throw new ParserException(createExceptStr("Non-alphabetical character found in departure code.", "2", args[1]
+      throw new ParserException(createExceptStr("Non-alphabetical character found in departure code.", "1", args[1]
                                                       ,  "Departure code must be 3 alphabetical letters."));
     //check departure date/time
-    DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+    DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
     LocalDateTime dtTemporal;
     String departureDTFormatted;
     try {
-      dtTemporal = LocalDateTime.parse(args[2] + " " + args[3], dtFormatter);
+      dtTemporal = LocalDateTime.parse(args[2] + " " + args[3] + " " + args[4].toUpperCase(), dtFormatter);
       departureDTFormatted = dtTemporal.format(dtFormatter);
     } catch (DateTimeParseException e) {
-      throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "3 and 4", args[2] + " " + args[3]
-                                                       , "Date and Time must be in format: MM/DD/YYYY HH:MM"));
+      throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "2, 3, and 4"
+                                                      , args[2] + " " + args[3] + " " + args[4]
+                                                      , "Date and Time must be in format: MM/DD/YYYY HH:MM AA"));
     }
     //check arrival code
-    if(args[4].length() != 3)
-      throw new ParserException(createExceptStr("Incorrect departure code length", "4", args[4]
+    if(args[5].length() != 3)
+      throw new ParserException(createExceptStr("Incorrect departure code length", "5", args[5]
                                                        , "Departure code must be 3 alphabetical letters."));
-    if(args[4].matches("[a-zA-Z]"))
-      throw new ParserException(createExceptStr("Non-alphabetical character found in departure code.", "4", args[4]
+    if(args[5].matches("[a-zA-Z]"))
+      throw new ParserException(createExceptStr("Non-alphabetical character found in departure code.", "5", args[5]
                                                       ,  "Departure code must be 3 alphabetical letters."));
     //check departure date/time
     String arrivalDTFormatted;
     try {
-      dtTemporal = LocalDateTime.parse(args[5] + " " + args[6], dtFormatter);
+      dtTemporal = LocalDateTime.parse(args[6] + " " + args[7] + " " + args[8].toUpperCase(), dtFormatter);
       arrivalDTFormatted = dtTemporal.format(dtFormatter);
     } catch (DateTimeParseException e) {
-      throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "6 and 7", args[5] + " " + args[6]
-                                                       , "Date and Time must be in format: MM/DD/YYYY HH:MM"));
+      throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "6, 7, and 8"
+                                                      , args[6] + " " + args[7] + " " + args[8]
+                                                      , "Date and Time must be in format: MM/DD/YYYY HH:MM AA"));
     }
     //Add parsed and validated flight to airline
-    return new Flight(Integer.parseInt(args[0]), args[1], departureDTFormatted, args[4], arrivalDTFormatted);
+    return new Flight(Integer.parseInt(args[0]), args[1].toUpperCase(), departureDTFormatted, args[5].toUpperCase(), arrivalDTFormatted);
   }
 }
