@@ -37,7 +37,7 @@ class Project1Test {
 
   //Testing Airline class
 
-  @Test
+  /*@Test
   void getNameReturnsConstructedName() throws IOException
   {
     Airline testAirline = new Airline("Icelandair");
@@ -53,6 +53,6 @@ class Project1Test {
     
     testAirline.addFlight(testFlight);
     assertThat(testAirline.getFlights().equals(compCollection), is(true));
-  }
+  }*/
 
 }

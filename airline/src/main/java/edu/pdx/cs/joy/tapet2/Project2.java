@@ -156,6 +156,29 @@ public class Project2 {
             System.err.println("ERROR: IOException on dump append() function.");
         }
 
+        if(prettyFileFound)
+        {
+            try{
+                File prettyFile = new File(args[prettyPathLoc]);
+                PrettyPrinter prettyPrint;
+                if(prettyFile.exists())
+                {
+                    prettyPrint = new PrettyPrinter(new FileWriter(prettyFile.getPath()));
+                    prettyPrint.dump(airline);
+                }
+                else
+                { //this else is currently irrelevant
+                    prettyPrint = new PrettyPrinter(new PrintWriter(prettyFile));
+                    prettyPrint.dump(airline);
+                }
+            } catch (FileNotFoundException e) {
+                System.err.println("ERROR: Output file not found...");
+            } catch (IOException e) {
+                System.err.println("ERROR: IOException on dump append() function.");
+            }
+        }
+    
+
         //output if -print
         if(printFlag == true)
         {

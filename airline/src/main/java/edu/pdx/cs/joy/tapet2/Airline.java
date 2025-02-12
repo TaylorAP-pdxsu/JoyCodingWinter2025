@@ -44,7 +44,7 @@ public class Airline extends AbstractAirline<Flight> {
   }
 
   @Override
-  public Collection<Flight> getFlights() {
+  public ArrayList<Flight> getFlights() {
     return flights;
   }
 

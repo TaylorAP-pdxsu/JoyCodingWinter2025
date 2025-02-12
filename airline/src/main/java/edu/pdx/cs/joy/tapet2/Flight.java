@@ -5,6 +5,7 @@ import edu.pdx.cs.joy.AbstractFlight;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Locale;
 
 /**
  * <p>
@@ -19,7 +20,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   private String departTime;
   private String destAirport;
   private String arrivalTime;
-  private DateTimeFormatter dtFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf("SHORT"));
+  private DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+
 
   /**
    * Default constructor
@@ -58,7 +60,9 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   //ignore
   @Override
   public String getDepartureString() {
-    return LocalDateTime.parse(departTime).format(dtFormat);
+    LocalDateTime dtTemporal = LocalDateTime.parse(departTime);
+    DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf("SHORT")).withLocale(Locale.US);
+    return dtTemporal.format(dtFormat);
   }
 
   @Override
@@ -69,6 +73,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   //ignore
   @Override
   public String getArrivalString() {
+    dtFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+    dtFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf("SHORT"));
     return LocalDateTime.parse(arrivalTime).format(dtFormat);
   }
 
