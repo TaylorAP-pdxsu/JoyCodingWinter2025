@@ -1,6 +1,7 @@
 package edu.pdx.cs.joy.tapet2;
 
 import edu.pdx.cs.joy.AbstractAirline;
+import edu.pdx.cs.joy.AirportNames;
 
 import java.util.*;
 
@@ -41,6 +42,7 @@ public class Airline extends AbstractAirline<Flight> {
   @Override
   public void addFlight(Flight flight) {
     flights.add(flight);
+    sortFlights();
   }
 
   @Override
@@ -61,5 +63,26 @@ public class Airline extends AbstractAirline<Flight> {
   public String getNewFlightTxt()
   {
     return flights.get(flights.size() - 1).getFlightText();
+  }
+
+  public String getPrettyText()
+  {
+    String prettyText = new String("Airline: " + name);
+    for(Flight flight: flights)
+    {
+        prettyText += "\nFlight Number:       " + flight.getNumber();
+        prettyText += "\nDeparture Airport:   " + AirportNames.getName(flight.getSource());
+        prettyText += "\nDeparture Time:      " + flight.getDepartureString();
+        prettyText += "\nDestination Airport: " + AirportNames.getName(flight.getDestination());
+        prettyText += "\nDestination Time:    " + flight.getArrivalString();
+        prettyText += "\nDuration:            " + flight.getDuration() + "min";
+        prettyText += "\n";
+    }
+    return prettyText;
+  }
+
+  private void sortFlights()
+  {
+    Collections.sort(flights);
   }
 }

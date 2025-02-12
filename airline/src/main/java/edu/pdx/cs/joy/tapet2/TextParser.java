@@ -2,6 +2,7 @@ package edu.pdx.cs.joy.tapet2;
 
 import edu.pdx.cs.joy.AirlineParser;
 import edu.pdx.cs.joy.ParserException;
+import edu.pdx.cs.joy.AirportNames;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -101,13 +102,17 @@ public class TextParser implements AirlineParser<Airline> {
     if(args[1].matches("[a-zA-Z]"))
       throw new ParserException(createExceptStr("Non-alphabetical character found in departure code.", "1", args[1]
                                                       ,  "Departure code must be 3 alphabetical letters."));
+
+    if(AirportNames.getName(args[1]) == null)
+      throw new ParserException(createExceptStr("Airport code does not exist.", "1", args[1]
+                                                      , "Departure code must be of an existing airport"));
     //check departure date/time
     DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
-    LocalDateTime dtTemporal;
+    LocalDateTime departTemporal;
     String departureDTFormatted;
     try {
-      dtTemporal = LocalDateTime.parse(args[2] + " " + args[3] + " " + args[4].toUpperCase(), dtFormatter);
-      departureDTFormatted = dtTemporal.format(dtFormatter);
+      departTemporal = LocalDateTime.parse(args[2] + " " + args[3] + " " + args[4].toUpperCase(), dtFormatter);
+      departureDTFormatted = departTemporal.format(dtFormatter);
     } catch (DateTimeParseException e) {
       throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "2, 3, and 4"
                                                       , args[2] + " " + args[3] + " " + args[4]
@@ -120,16 +125,27 @@ public class TextParser implements AirlineParser<Airline> {
     if(args[5].matches("[a-zA-Z]"))
       throw new ParserException(createExceptStr("Non-alphabetical character found in departure code.", "5", args[5]
                                                       ,  "Departure code must be 3 alphabetical letters."));
+
+    if(AirportNames.getName(args[5]) == null)
+      throw new ParserException(createExceptStr("Airport code does not exist.", "5", args[5]
+                                                      , "Arrival code must be of an existing airport"));
     //check departure date/time
+    LocalDateTime arrivalTemporal;
     String arrivalDTFormatted;
     try {
-      dtTemporal = LocalDateTime.parse(args[6] + " " + args[7] + " " + args[8].toUpperCase(), dtFormatter);
-      arrivalDTFormatted = dtTemporal.format(dtFormatter);
+      arrivalTemporal = LocalDateTime.parse(args[6] + " " + args[7] + " " + args[8].toUpperCase(), dtFormatter);
+      arrivalDTFormatted = arrivalTemporal.format(dtFormatter);
     } catch (DateTimeParseException e) {
       throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "6, 7, and 8"
                                                       , args[6] + " " + args[7] + " " + args[8]
                                                       , "Date and Time must be in format: MM/DD/YYYY HH:MM AA"));
     }
+
+    if(arrivalTemporal.compareTo(departTemporal) < 0)
+      throw new ParserException(createExceptStr("Arrival time is before departure time", "2, 3, 4, 6, 7, and 8"
+                                                      , "departure: " + args[2] + " " + args[3] + " " + args[4] 
+                                                          + " | arrival: " + args[6] + " " + args[7] + " " + args[8]
+                                                      , "No time traveling allowed!"));
     //Add parsed and validated flight to airline
     return new Flight(Integer.parseInt(args[0]), args[1].toUpperCase(), departureDTFormatted, args[5].toUpperCase(), arrivalDTFormatted);
   }

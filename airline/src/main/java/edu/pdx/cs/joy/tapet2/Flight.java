@@ -5,7 +5,11 @@ import edu.pdx.cs.joy.AbstractFlight;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Locale;
+import java.util.Date;
+import java.time.Duration;
 
 /**
  * <p>
@@ -21,6 +25,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   private String destAirport;
   private String arrivalTime;
   private DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+  private DateTimeFormatter shortFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf("SHORT")).withLocale(Locale.US);
 
 
   /**
@@ -60,9 +65,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   //ignore
   @Override
   public String getDepartureString() {
-    LocalDateTime dtTemporal = LocalDateTime.parse(departTime);
-    DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf("SHORT")).withLocale(Locale.US);
-    return dtTemporal.format(dtFormat);
+    LocalDateTime dtTemporal = LocalDateTime.parse(departTime, dtFormat);
+    return dtTemporal.format(shortFormat);
   }
 
   @Override
@@ -72,10 +76,9 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
 
   //ignore
   @Override
-  public String getArrivalString() {
-    dtFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
-    dtFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf("SHORT"));
-    return LocalDateTime.parse(arrivalTime).format(dtFormat);
+  public String getArrivalString() {    
+    LocalDateTime dtTemporal = LocalDateTime.parse(arrivalTime, dtFormat);
+    return dtTemporal.format(shortFormat);
   }
 
   public String getFlightText()
@@ -84,9 +87,26 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
                         + destAirport + " " + arrivalTime);
   }
 
+  public String getDuration() {
+    LocalDateTime departAt = LocalDateTime.parse(departTime, dtFormat);
+    LocalDateTime arriveAt = LocalDateTime.parse(arrivalTime, dtFormat);
+    long duration = Duration.between(departAt, arriveAt).getSeconds();
+    return String.valueOf(duration/60);
+  }
+
   @Override
   public int compareTo(Flight other)
   {
+    int compAirport = sourceAirport.compareTo(other.sourceAirport);
+    //same airport
+    if(compAirport < 0) return -1;
+    if(compAirport > 0) return 1;
+
+    //neither above conditions trigger, then we are the same airport
+    int compDepartTime = LocalDateTime.parse(departTime, dtFormat).compareTo(LocalDateTime.parse(other.departTime, dtFormat));
+    //compare departure times
+    if(compDepartTime < 0)  return -1;
+    if(compDepartTime > 0)  return 1;
     return 0;
   }
 }
