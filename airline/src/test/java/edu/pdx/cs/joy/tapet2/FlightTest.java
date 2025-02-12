@@ -7,6 +7,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import org.junit.jupiter.api.BeforeEach;
+
 /**
  * Unit tests for the {@link Flight} class.
  *
@@ -14,16 +16,22 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class FlightTest {
 
-  /*@Test
+  private Flight testFlight;
+
+  @BeforeEach
+  void setUp()
+  {
+    testFlight = new Flight(133, "PDX", "09/08/2025 06:00 AM", "ARN", "09/08/2025 07:00 PM");
+  }
+
+  @Test
   void returnedValuesEqualConstructedValues() {
-    Flight testFlight = new Flight(13, "PDX", "9/8/2025 6:00", "ARN", "9/8/2025 19:00");
-    assertThat(testFlight.getNumber(), is(13));
+    assertThat(testFlight.getNumber(), is(133));
     assertThat(testFlight.getSource(), is("PDX"));
-    assertThat(testFlight.getDepartureString(), is("9/8/2025 6:00"));
+    assertEquals(testFlight.getDepartureString(), "9/8/25, 6:00 AM");
     assertThat(testFlight.getDestination(), is("ARN"));
-    assertThat(testFlight.getArrivalString(), is("9/8/2025 19:00"));
-    
-  }*/
+    assertThat(testFlight.getArrivalString(), is("9/8/25, 7:00 PM"));
+  }
 
   /**
    * This unit test will need to be modified (likely deleted) as you implement
@@ -34,9 +42,9 @@ public class FlightTest {
   void getArrivalStringNeedsToBeImplemented() {
     Flight flight = new Flight();
     assertThrows(UnsupportedOperationException.class, flight::getArrivalString);
-  }*/
+  }
 
-  /*@Test
+  @Test
   void forProject1ItIsOkayIfGetDepartureTimeReturnsNull() {
     Flight flight = new Flight();
     assertThat(flight.getDeparture(), is(nullValue()));
