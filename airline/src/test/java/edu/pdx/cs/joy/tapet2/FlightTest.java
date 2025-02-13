@@ -28,9 +28,9 @@ public class FlightTest {
   void returnedValuesEqualConstructedValues() {
     assertThat(testFlight.getNumber(), is(133));
     assertThat(testFlight.getSource(), is("PDX"));
-    assertEquals(testFlight.getDepartureString(), "9/8/25, 6:00 AM");
+    assertEquals(testFlight.getDepartureString(), "9/8/25, 6:00\u202FAM");
     assertThat(testFlight.getDestination(), is("ARN"));
-    assertThat(testFlight.getArrivalString(), is("9/8/25, 7:00 PM"));
+    assertThat(testFlight.getArrivalString(), is("9/8/25, 7:00\u202FPM"));
   }
 
   /**
