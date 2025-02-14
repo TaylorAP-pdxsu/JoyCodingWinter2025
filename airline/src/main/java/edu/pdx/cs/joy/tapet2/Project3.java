@@ -12,7 +12,7 @@ import java.util.Vector;
 import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
 
-public class Project2 {
+public class Project3 {
     
     private static boolean readMeFlag = false;
     private static boolean printFlag = false;
@@ -82,7 +82,7 @@ public class Project2 {
         if(readMeFlag == true)
         {
             try {
-                InputStream stream = Project2.class.getClassLoader().getResourceAsStream("edu/pdx/cs/joy/tapet2/README.txt");
+                InputStream stream = Project3.class.getClassLoader().getResourceAsStream("edu/pdx/cs/joy/tapet2/README.txt");
                 Scanner scanner = new Scanner(stream, StandardCharsets.UTF_8.name());
                 System.out.println("\n" + scanner.useDelimiter("\\A").next() + "\n");
                 scanner.close();
