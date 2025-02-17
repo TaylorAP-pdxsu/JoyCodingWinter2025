@@ -102,8 +102,9 @@ public class Project3 {
                 txtParser = new TextParser(new FileReader(new File(args[filePathLoc])));
                 airline = txtParser.parse();
             } catch (FileNotFoundException e) {
-                System.err.println("ERROR: Input file not found..."
-                                    + "Continuing to read from command line with initialized null parser...");
+                System.err.println("NOTE: Input file not found..."
+                                    + "\nContinuing to read from command line with initialized null parser..."
+                                    + "\nCreating new file...");
                 //txtParser = new TextParser(null);
             } catch (ParserException e) {
                 System.err.println("\nERROR: Parser exception..." + "\n--CAUSE-- " + e.getMessage() + "\n");

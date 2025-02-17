@@ -107,7 +107,7 @@ public class TextParser implements AirlineParser<Airline> {
       throw new ParserException(createExceptStr("Airport code does not exist.", "1", args[1]
                                                       , "Departure code must be of an existing airport"));
     //check departure date/time
-    DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a");
+    DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a");
     LocalDateTime departTemporal;
     String departureDTFormatted;
     try {

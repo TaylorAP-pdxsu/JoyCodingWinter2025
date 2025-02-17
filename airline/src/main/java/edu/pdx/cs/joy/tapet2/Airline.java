@@ -42,7 +42,6 @@ public class Airline extends AbstractAirline<Flight> {
   @Override
   public void addFlight(Flight flight) {
     flights.add(flight);
-    sortFlights();
   }
 
   @Override
@@ -81,7 +80,7 @@ public class Airline extends AbstractAirline<Flight> {
     return prettyText;
   }
 
-  private void sortFlights()
+  public void sortFlights()
   {
     Collections.sort(flights);
   }
