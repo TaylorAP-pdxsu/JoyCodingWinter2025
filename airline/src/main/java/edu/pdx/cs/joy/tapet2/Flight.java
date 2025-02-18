@@ -5,10 +5,7 @@ import edu.pdx.cs.joy.AbstractFlight;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.Locale;
-import java.util.Date;
 import java.time.Duration;
 
 /**
@@ -62,11 +59,30 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
     return sourceAirport;
   }
 
-  //ignore
   @Override
   public String getDepartureString() {
     LocalDateTime dtTemporal = LocalDateTime.parse(departTime, dtFormat);
     return dtTemporal.format(shortFormat);
+  }
+
+  public String getDepartDay() {
+    return String.valueOf(LocalDateTime.parse(departTime, dtFormat).getDayOfMonth());
+  }
+
+  public String getDepartMonth() {
+    return String.valueOf(LocalDateTime.parse(departTime, dtFormat).getMonth().getValue());
+  }
+
+  public String getDepartYear() {
+    return String.valueOf(LocalDateTime.parse(departTime, dtFormat).getYear());
+  }
+
+  public String getDepartHour() {
+    return String.valueOf(LocalDateTime.parse(departTime, dtFormat).getHour());
+  }
+
+  public String getDepartMinute() {
+    return String.valueOf(LocalDateTime.parse(departTime, dtFormat).getMinute());
   }
 
   @Override
@@ -78,6 +94,26 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   public String getArrivalString() {    
     LocalDateTime dtTemporal = LocalDateTime.parse(arrivalTime, dtFormat);
     return dtTemporal.format(shortFormat);
+  }
+
+  public String getArrivalDay() {
+    return String.valueOf(LocalDateTime.parse(arrivalTime, dtFormat).getDayOfMonth());
+  }
+
+  public String getArrivalMonth() {
+    return String.valueOf(LocalDateTime.parse(arrivalTime, dtFormat).getMonth().getValue());
+  }
+
+  public String getArrivalYear() {
+    return String.valueOf(LocalDateTime.parse(arrivalTime, dtFormat).getYear());
+  }
+
+  public String getArrivalHour() {
+    return String.valueOf(LocalDateTime.parse(arrivalTime, dtFormat).getHour());
+  }
+
+  public String getArrivalMinute() {
+    return String.valueOf(LocalDateTime.parse(arrivalTime, dtFormat).getMinute());
   }
 
   public String getFlightText()

@@ -12,7 +12,7 @@ import java.util.Vector;
 import java.util.Arrays;
 import java.nio.charset.StandardCharsets;
 
-public class Project3 {
+public class Project4 {
     
     private static boolean readMeFlag = false;
     private static boolean printFlag = false;
@@ -82,7 +82,7 @@ public class Project3 {
         if(readMeFlag == true)
         {
             try {
-                InputStream stream = Project3.class.getClassLoader().getResourceAsStream("edu/pdx/cs/joy/tapet2/README.txt");
+                InputStream stream = Project4.class.getClassLoader().getResourceAsStream("edu/pdx/cs/joy/tapet2/README.txt");
                 Scanner scanner = new Scanner(stream, StandardCharsets.UTF_8.name());
                 System.out.println("\n" + scanner.useDelimiter("\\A").next() + "\n");
                 scanner.close();
@@ -194,6 +194,9 @@ public class Project3 {
         {
             System.out.println("\n" + airline.getName() + "\n" + airline.getNewFlightTxt());
         }
+
+        XmlDumper xmlDumper = new XmlDumper();
+        xmlDumper.dump(airline);
     }
 
     private static String helpMsg()
