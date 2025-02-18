@@ -16,10 +16,12 @@ import org.w3c.dom.*;
 public class XmlDumper implements AirlineDumper<Airline>
 {
     private AirlineXmlHelper helper;
+    private String xmlWritePath;
 
-    public XmlDumper()
+    public XmlDumper(String xmlPath)
     {
         helper = new AirlineXmlHelper();
+        xmlWritePath = xmlPath;
     }
 
     @Override
@@ -41,6 +43,7 @@ public class XmlDumper implements AirlineDumper<Airline>
         } catch (ParserConfigurationException e) {
             System.err.println("ERROR: Can't create BUILDER. Parser config is invalid or unable to parse properly...\n"
                                 + e.getMessage());
+            return;
         } catch (DOMException e) {
             System.err.println("ERROR: Can't create DOCUMENT TYPE or DOCUMENT. Incorrect XML qualified name...\n"
                                 + e.getMessage());
@@ -107,7 +110,7 @@ public class XmlDumper implements AirlineDumper<Airline>
         try
         {
             Source src = new DOMSource(doc);
-            Result res = new StreamResult("./xmlTest");
+            Result res = new StreamResult(xmlWritePath);
 
             TransformerFactory xFactory = TransformerFactory.newInstance();
             Transformer xform = xFactory.newTransformer();

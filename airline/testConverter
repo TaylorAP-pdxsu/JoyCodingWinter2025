@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE Airline SYSTEM "airline.dtd">
+<Airline>
+    <name>Project2</name>
+    <flight>
+        <number>123</number>
+        <src>PDX</src>
+        <depart>
+            <date day="9" month="8" year="2025"/>
+            <time hour="0" minute="0"/>
+        </depart>
+        <dest>ARN</dest>
+        <depart>
+            <date day="9" month="8" year="2025"/>
+            <time hour="18" minute="0"/>
+        </depart>
+    </flight>
+    <flight>
+        <number>123</number>
+        <src>PDX</src>
+        <depart>
+            <date day="9" month="8" year="2025"/>
+            <time hour="0" minute="0"/>
+        </depart>
+        <dest>ARN</dest>
+        <depart>
+            <date day="9" month="8" year="2025"/>
+            <time hour="18" minute="0"/>
+        </depart>
+    </flight>
+    <flight>
+        <number>123</number>
+        <src>PDX</src>
+        <depart>
+            <date day="9" month="8" year="2025"/>
+            <time hour="0" minute="0"/>
+        </depart>
+        <dest>ARN</dest>
+        <depart>
+            <date day="9" month="8" year="2025"/>
+            <time hour="18" minute="0"/>
+        </depart>
+    </flight>
+</Airline>

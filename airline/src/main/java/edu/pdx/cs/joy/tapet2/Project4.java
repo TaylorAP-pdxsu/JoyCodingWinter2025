@@ -21,6 +21,8 @@ public class Project4 {
     private static int prettyPathLoc;
     private static boolean prettyFileFound = false;
     private static String[] flightArgs;
+    private static boolean xmlFileFound = false;
+    private static int xmlPathLoc;
 
     private static void checkArgsOpts(String[] args)
     {
@@ -51,13 +53,24 @@ public class Project4 {
                     prettyPathLoc = i+1;
                     ++i;
                 }
+                else if(args[i].equals("-xmlFile"))
+                {
+                    xmlFileFound = true;
+                    xmlPathLoc = i+1;
+                    ++i;
+                }
                 else
                 {
                     throw new IllegalArgumentException("\nERROR: Unknown command line option"
                                                         + "\nOccured at argument " + i
                                                         + "\nError Value: " + args[i]
-                                                        + "\nValid options include: -README, -print, and -textFile");
+                                                        + "\nValid options include: "
+                                                        + "-README, -print, -textFile, -prettyFile, -xmlFile");
                 }
+                if(textFileFound == true && xmlFileFound == true)
+                    throw new IllegalArgumentException("ERROR: Cannot use both -textFile and -xmlFile options"
+                                                        + "\nOccured at argument " + i
+                                                        + "\nError Value: " + args[i]);
             }
             else
             {
@@ -96,7 +109,7 @@ public class Project4 {
         TextParser txtParser;
         airline = new Airline(flightArgs[0]);
         txtParser = new TextParser(null);
-        if(textFileFound == true)
+        if(textFileFound && !xmlFileFound)
         {
             try {
                 txtParser = new TextParser(new FileReader(new File(args[filePathLoc])));
@@ -127,6 +140,12 @@ public class Project4 {
             return;
         }
 
+        //xml parsing/dumping
+        if(xmlFileFound && !textFileFound)
+        {
+            System.out.println("HANDLE: -xmlFile not yet implemented!");
+        }
+
         //create airline and output file
         try {
             File file = new File(args[filePathLoc]);
@@ -136,15 +155,17 @@ public class Project4 {
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 if(reader.readLine().equals(airline.getName()))
                 {
-                    txtDump = new TextDumper(new FileWriter(file.getPath(), true));
-                    txtDump.append(airline);
+                    txtDump = new TextDumper(new FileWriter(file.getPath()));
+                    txtDump.dump(airline);
                 }
                 else
                 {
                     System.err.println("ERROR: Given airline name from input file does not match already existing output file."
                                      + "\nFIX: Check that airline name on command line and input file matches the output file.");
+                    reader.close();
                     return;
                 }
+                reader.close();
             }
             else
             {
@@ -194,9 +215,6 @@ public class Project4 {
         {
             System.out.println("\n" + airline.getName() + "\n" + airline.getNewFlightTxt());
         }
-
-        XmlDumper xmlDumper = new XmlDumper();
-        xmlDumper.dump(airline);
     }
 
     private static String helpMsg()
