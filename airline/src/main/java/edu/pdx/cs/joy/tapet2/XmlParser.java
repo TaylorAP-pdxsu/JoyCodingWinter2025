@@ -68,11 +68,10 @@ public class XmlParser implements AirlineParser<Airline> {
                     
                     int hourDepart = Integer.valueOf(eDepart.getElementsByTagName("time").item(0)
                                                     .getAttributes().getNamedItem("hour").getTextContent());
-                    lineParse += " " + eDepart.getElementsByTagName("time").item(0)
-                    .getAttributes().getNamedItem("hour").getTextContent()/*String.valueOf(hourDepart > 12 ? hourDepart - 12 : hourDepart)*/
+                    lineParse += " " + String.valueOf(hourDepart > 12 ? hourDepart - 12 : hourDepart)
                                + ":" + eDepart.getElementsByTagName("time").item(0)
                                                     .getAttributes().getNamedItem("minute").getTextContent()
-                               + " " + (hourDepart > 12 ? "PM" : "AM");
+                               + " " + (hourDepart >= 12 ? "PM" : "AM");
 
                     lineParse += " " + element.getElementsByTagName("dest").item(0).getTextContent();
                     Element eArrival = (Element) element.getElementsByTagName("arrive").item(0);
@@ -88,7 +87,7 @@ public class XmlParser implements AirlineParser<Airline> {
                     lineParse += " " + String.valueOf(hourArrive > 12 ? hourArrive - 12 : hourArrive)
                                + ":" + eArrival.getElementsByTagName("time").item(0)
                                                     .getAttributes().getNamedItem("minute").getTextContent()
-                               + " " + (hourArrive > 12 ? "PM" : "AM");
+                               + " " + (hourArrive >= 12 ? "PM" : "AM");
                             
                     String[] args = lineParse.split(" ");
 

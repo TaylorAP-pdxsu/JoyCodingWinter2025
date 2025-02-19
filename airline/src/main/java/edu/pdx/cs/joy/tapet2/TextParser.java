@@ -2,17 +2,10 @@ package edu.pdx.cs.joy.tapet2;
 
 import edu.pdx.cs.joy.AirlineParser;
 import edu.pdx.cs.joy.ParserException;
-import edu.pdx.cs.joy.AirportNames;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
-import javax.swing.text.html.HTMLEditorKit.Parser;
-
-import java.time.LocalDateTime;
 
 /**
  * TextParser which takes in input or command line args and parses for correct info
@@ -35,11 +28,6 @@ public class TextParser implements AirlineParser<Airline> {
     try (
       BufferedReader br = new BufferedReader(this.reader)
     ) {
-
-      if(reader == null)
-      {
-        throw new ParserException("ERROR: Instance of TextParser created without value, reader is NULL.");
-      }
       //handle airline name
       String airlineName = br.readLine();
       if (airlineName == null) {

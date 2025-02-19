@@ -6,7 +6,6 @@ import com.google.common.io.Resources;
 import java.io.*;
 
 import edu.pdx.cs.joy.ParserException;
-import edu.pdx.cs.joy.tapet2.Airline;
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.Arrays;

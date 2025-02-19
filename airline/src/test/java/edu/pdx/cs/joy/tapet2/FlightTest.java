@@ -35,6 +35,22 @@ public class FlightTest {
   }
 
   @Test
+  void individualDateValuesReturnProperly()
+  {
+    assertThat(testFlight.getDepartDay(), is("8"));
+    assertThat(testFlight.getDepartMonth(), is("9"));
+    assertThat(testFlight.getDepartYear(), is("2025"));
+    assertThat(testFlight.getDepartHour(), is("6"));
+    assertThat(testFlight.getDepartMinute(), is("0"));
+
+    assertThat(testFlight.getArrivalDay(), is("8"));
+    assertThat(testFlight.getArrivalMonth(), is("9"));
+    assertThat(testFlight.getArrivalYear(), is("2025"));
+    assertThat(testFlight.getArrivalHour(), is("19"));
+    assertThat(testFlight.getArrivalMinute(), is("0"));
+  }
+
+  @Test
   void getFlightTextisCorrect() 
   {
     assertThat(testFlight.getFlightText(), is("133 PDX 09/08/2025 06:00 AM ARN 09/08/2025 07:00 PM"));
@@ -80,21 +96,4 @@ public class FlightTest {
     Flight sameFlight = new Flight(133, "PDX", "09/08/2025 07:00 AM", "ARN", "09/08/2025 07:00 PM");
     assertThat(testFlight.compareTo(sameFlight), is(-1));
   }
-
-  /**
-   * This unit test will need to be modified (likely deleted) as you implement
-   * your project.
-   */
-  
-  /*@Test
-  void getArrivalStringNeedsToBeImplemented() {
-    Flight flight = new Flight();
-    assertThrows(UnsupportedOperationException.class, flight::getArrivalString);
-  }
-
-  @Test
-  void forProject1ItIsOkayIfGetDepartureTimeReturnsNull() {
-    Flight flight = new Flight();
-    assertThat(flight.getDeparture(), is(nullValue()));
-  }*/
 }

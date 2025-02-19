@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE Airline SYSTEM "airline.dtd">
-<Airline>
+<!DOCTYPE airline PUBLIC "-//Joy of Coding at PSU//DTD Airline//EN" "airline.dtd">
+<airline>
     <name>Project2</name>
     <flight>
         <number>123</number>
@@ -10,35 +10,22 @@
             <time hour="0" minute="0"/>
         </depart>
         <dest>ARN</dest>
-        <depart>
+        <arrive>
             <date day="9" month="8" year="2025"/>
             <time hour="18" minute="0"/>
-        </depart>
+        </arrive>
     </flight>
     <flight>
-        <number>123</number>
-        <src>PDX</src>
+        <number>100</number>
+        <src>CWA</src>
         <depart>
-            <date day="9" month="8" year="2025"/>
-            <time hour="0" minute="0"/>
+            <date day="3" month="1" year="2025"/>
+            <time hour="12" minute="14"/>
         </depart>
-        <dest>ARN</dest>
-        <depart>
-            <date day="9" month="8" year="2025"/>
-            <time hour="18" minute="0"/>
-        </depart>
+        <dest>DRO</dest>
+        <arrive>
+            <date day="13" month="1" year="2025"/>
+            <time hour="14" minute="45"/>
+        </arrive>
     </flight>
-    <flight>
-        <number>123</number>
-        <src>PDX</src>
-        <depart>
-            <date day="9" month="8" year="2025"/>
-            <time hour="0" minute="0"/>
-        </depart>
-        <dest>ARN</dest>
-        <depart>
-            <date day="9" month="8" year="2025"/>
-            <time hour="18" minute="0"/>
-        </depart>
-    </flight>
-</Airline>
+</airline>

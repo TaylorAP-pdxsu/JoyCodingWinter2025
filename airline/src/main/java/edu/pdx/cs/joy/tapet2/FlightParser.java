@@ -28,7 +28,7 @@ public class FlightParser {
         if(args[1].length() != 3)
         throw new ParserException(createExceptStr("Incorrect departure code length", "1", args[1]
                                                         , "Departure code must be 3 alphabetical letters."));
-        if(args[1].matches("[a-zA-Z]"))
+        if(!args[1].matches("[a-zA-Z]"))
         throw new ParserException(createExceptStr("Non-alphabetical character found in departure code.", "1", args[1]
                                                         ,  "Departure code must be 3 alphabetical letters."));
 
@@ -36,7 +36,7 @@ public class FlightParser {
         throw new ParserException(createExceptStr("Airport code does not exist.", "1", args[1]
                                                         , "Departure code must be of an existing airport"));
         //check departure date/time
-        DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
+        DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("M/d/yyyy h:m a");
         LocalDateTime departTemporal;
         String departureDTFormatted;
         try {

@@ -115,6 +115,7 @@ public class XmlDumper implements AirlineDumper<Airline>
             TransformerFactory xFactory = TransformerFactory.newInstance();
             Transformer xform = xFactory.newTransformer();
             xform.setOutputProperty(OutputKeys.INDENT, "yes");
+            xform.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "-//Joy of Coding at PSU//DTD Airline//EN");
             xform.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "airline.dtd");
             xform.transform(src, res);
         } catch (TransformerException e) {
