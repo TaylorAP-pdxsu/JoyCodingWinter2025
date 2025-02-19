@@ -127,7 +127,8 @@ public class Project4 {
         try {
             if(airline.getName().equals(flightArgs[0]))
             {
-                airline.addFlight(txtParser.parseFlight(Arrays.copyOfRange(flightArgs, 1, flightArgs.length)));
+                FlightParser flightParser = new FlightParser();
+                airline.addFlight(flightParser.parseFlight(Arrays.copyOfRange(flightArgs, 1, flightArgs.length)));
             }
             else
             {

@@ -36,10 +36,10 @@ public class XmlDumper implements AirlineDumper<Airline>
             builder.setErrorHandler(helper);
             builder.setEntityResolver(helper);
             DOMImplementation dom = builder.getDOMImplementation();
-            DocumentType docType = dom.createDocumentType("Airline"
+            DocumentType docType = dom.createDocumentType("airline"
                                                             , "-//Joy of Coding at PSU//DTD Airline//EN"
                                                             , "airline.dtd");
-            doc = dom.createDocument(null, "Airline", docType);
+            doc = dom.createDocument(null, "airline", docType);
         } catch (ParserConfigurationException e) {
             System.err.println("ERROR: Can't create BUILDER. Parser config is invalid or unable to parse properly...\n"
                                 + e.getMessage());
