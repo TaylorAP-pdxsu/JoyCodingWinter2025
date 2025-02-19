@@ -124,6 +124,20 @@ public class Project4 {
                 return;
             }
         }
+
+        //xml parsing/dumping
+        if(xmlFileFound && !textFileFound)
+        {
+            try {
+                XmlParser xmlParser = new XmlParser(args[xmlPathLoc]);
+                airline = xmlParser.parse();
+            } catch (ParserException e) {
+                System.err.println("\nERROR: XML Parser exception..." + "\n--CAUSE--\n" + e.getMessage());
+                return;
+            }
+        }
+
+        //command line flight
         try {
             if(airline.getName().equals(flightArgs[0]))
             {
@@ -137,46 +151,50 @@ public class Project4 {
                 return;
             }
         } catch (ParserException e) {
-            System.err.println("\nERROR: Parser exception..." + "\n--CAUSE-- " + e.getMessage() + "\n");
+            System.err.println("\nERROR: Text file Parser exception..." + "\n--CAUSE-- " + e.getMessage() + "\n");
             return;
         }
 
-        //xml parsing/dumping
-        if(xmlFileFound && !textFileFound)
+        //create airline and text output file
+        if(textFileFound && !xmlFileFound)
         {
-            System.out.println("HANDLE: -xmlFile not yet implemented!");
-        }
-
-        //create airline and output file
-        try {
-            File file = new File(args[filePathLoc]);
-            TextDumper txtDump;
-            if(file.exists())
-            {
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                if(reader.readLine().equals(airline.getName()))
+            try {
+                File file = new File(args[filePathLoc]);
+                TextDumper txtDump;
+                if(file.exists())
                 {
-                    txtDump = new TextDumper(new FileWriter(file.getPath()));
-                    txtDump.dump(airline);
+                    BufferedReader reader = new BufferedReader(new FileReader(file));
+                    if(reader.readLine().equals(airline.getName()))
+                    {
+                        txtDump = new TextDumper(new FileWriter(file.getPath()));
+                        txtDump.dump(airline);
+                    }
+                    else
+                    {
+                        System.err.println("ERROR: Given airline name from input file does not match already existing output file."
+                                        + "\nFIX: Check that airline name on command line and input file matches the output file.");
+                        reader.close();
+                        return;
+                    }
+                    reader.close();
                 }
                 else
                 {
-                    System.err.println("ERROR: Given airline name from input file does not match already existing output file."
-                                     + "\nFIX: Check that airline name on command line and input file matches the output file.");
-                    reader.close();
-                    return;
+                    txtDump = new TextDumper(new PrintWriter(file));
+                    txtDump.dump(airline);
                 }
-                reader.close();
+            } catch (FileNotFoundException e) {
+                System.err.println("ERROR: Output file not found...");
+            } catch (IOException e) {
+                System.err.println("ERROR: IOException on dump append() function.");
             }
-            else
-            {
-                txtDump = new TextDumper(new PrintWriter(file));
-                txtDump.dump(airline);
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("ERROR: Output file not found...");
-        } catch (IOException e) {
-            System.err.println("ERROR: IOException on dump append() function.");
+        }
+
+        if(xmlFileFound && !textFileFound)
+        {
+            //add exception handling?
+            XmlDumper xmlDumper = new XmlDumper(args[xmlPathLoc]);
+            xmlDumper.dump(airline);
         }
 
         //Pretty option

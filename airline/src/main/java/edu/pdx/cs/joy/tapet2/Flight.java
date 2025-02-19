@@ -21,7 +21,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   private String departTime;
   private String destAirport;
   private String arrivalTime;
-  private DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a");
+  private DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
   private DateTimeFormatter shortFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf("SHORT")).withLocale(Locale.US);
 
 

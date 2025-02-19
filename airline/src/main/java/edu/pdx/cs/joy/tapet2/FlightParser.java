@@ -36,7 +36,7 @@ public class FlightParser {
         throw new ParserException(createExceptStr("Airport code does not exist.", "1", args[1]
                                                         , "Departure code must be of an existing airport"));
         //check departure date/time
-        DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy h:mm a");
+        DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
         LocalDateTime departTemporal;
         String departureDTFormatted;
         try {

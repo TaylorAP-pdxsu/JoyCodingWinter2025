@@ -70,7 +70,7 @@ public class XmlDumper implements AirlineDumper<Airline>
                 Element depDate = doc.createElement("date");
                 Element depTime = doc.createElement("time");
                 Element dest = doc.createElement("dest");
-                Element arriveTime = doc.createElement("depart");
+                Element arriveTime = doc.createElement("arrive");
                 Element arrDate = doc.createElement("date");
                 Element arrTime = doc.createElement("time");
 
