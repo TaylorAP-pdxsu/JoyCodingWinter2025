@@ -61,19 +61,15 @@ public class FlightParserTest {
     @Test
     void depCodeNonIntFound()
     {
-        /*String flight = "123 P9X 08/09/2025 12:00 AM ARN 08/09/2025 6:00 PM";
+        String flight = "123 P9X 08/09/2025 12:00 AM ARN 08/09/2025 6:00 PM";
         String[] args = flight.split(" ");
         assertThrows(ParserException.class, () -> {
-            try {
                 testParser.parseFlight(args);
-            } catch (ParserException e) {
-                System.err.println(e.getMessage());
-            }
-        });*/
+        });
     }
 
     @Test
-    void airportCodeNonExistent()
+    void depAirportCodeNonExistent()
     {
         String flight = "123 ZZZ 08/09/2025 12:00 AM ARN 08/09/2025 6:00 PM";
         String[] args = flight.split(" ");
@@ -86,6 +82,56 @@ public class FlightParserTest {
     void depDateTimeUnreadableFormat()
     {
         String flight = "123 PDX 08/09Z/2025 12:00 AM ARN 08/09/2025 6:00 PM";
+        String[] args = flight.split(" ");
+        assertThrows(ParserException.class, () -> {
+            testParser.parseFlight(args);
+        });
+    }
+
+    @Test
+    void arrivCodeIncorrectLen()
+    {
+        String flight = "123 PDX 08/09/2025 12:00 AM ARNZ 08/09/2025 6:00 PM";
+        String[] args = flight.split(" ");
+        assertThrows(ParserException.class, () -> {
+            testParser.parseFlight(args);
+        });
+    }
+
+    @Test
+    void arrivCodeNonIntFound()
+    {
+        String flight = "123 PDX 08/09/2025 12:00 AM A4N 08/09/2025 6:00 PM";
+        String[] args = flight.split(" ");
+        assertThrows(ParserException.class, () -> {
+            testParser.parseFlight(args);
+        });
+    }
+
+    @Test
+    void arrivAirportCodeNonExistent()
+    {
+        String flight = "123 PDX 08/09/2025 12:00 AM ZZZ 08/09/2025 6:00 PM";
+        String[] args = flight.split(" ");
+        assertThrows(ParserException.class, () -> {
+            testParser.parseFlight(args);
+        });
+    }
+
+    @Test
+    void arrivDateTimeUnreadableFormat()
+    {
+        String flight = "123 PDX 08/09/2025 12:00 AM ARN 08/09Z/2025 6:00 PM";
+        String[] args = flight.split(" ");
+        assertThrows(ParserException.class, () -> {
+            testParser.parseFlight(args);
+        });
+    }
+
+    @Test
+    void arrivDateBeforeDepartDate()
+    {
+        String flight = "123 PDX 08/09/2025 7:00 AM ARN 08/09/2025 6:00 AM";
         String[] args = flight.split(" ");
         assertThrows(ParserException.class, () -> {
             testParser.parseFlight(args);

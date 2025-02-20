@@ -21,7 +21,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   private String departTime;
   private String destAirport;
   private String arrivalTime;
-  private DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("M/d/yyyy h:m a");
+  private DateTimeFormatter dtFormat = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
   private DateTimeFormatter shortFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf("SHORT")).withLocale(Locale.US);
 
 
@@ -83,6 +83,7 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
 
   public String getDepartMinute() {
     return String.valueOf(LocalDateTime.parse(departTime, dtFormat).getMinute());
+
   }
 
   @Override
@@ -118,8 +119,10 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
 
   public String getFlightText()
   {
-    return new String(flightNum + " " + sourceAirport + " " + departTime + " " 
-                        + destAirport + " " + arrivalTime);
+    return new String(flightNum + " " + sourceAirport + " " 
+                        + getDepartureString() + " " + destAirport + " " + getArrivalString());
+    /*return new String(getNumber() + " " + getSource() + " " + getDepartureString() + " " 
+                        + getDestination() + " " + getArrivalString());*/
   }
 
   public String getDuration() {
