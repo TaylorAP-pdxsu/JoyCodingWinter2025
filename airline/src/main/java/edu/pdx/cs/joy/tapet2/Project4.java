@@ -11,18 +11,18 @@ import java.nio.charset.StandardCharsets;
 public class Project4 {
 
     private static class CommandLine {
-        private static boolean readMeFlag = false;
-        private static boolean printFlag = false;
-        private static int filePathLoc;
-        private static boolean textFileFound = false;
-        private static int prettyPathLoc;
-        private static boolean prettyFileFound = false;
-        private static String[] flightArgs;
-        private static boolean xmlFileFound = false;
-        private static int xmlPathLoc;
+        private boolean readMeFlag = false;
+        private boolean printFlag = false;
+        private int filePathLoc;
+        private boolean textFileFound = false;
+        private int prettyPathLoc;
+        private boolean prettyFileFound = false;
+        private String[] flightArgs;
+        private boolean xmlFileFound = false;
+        private int xmlPathLoc;
     }
 
-    private static void checkArgsOpts(String[] args)
+    private static void checkArgsOpts(String[] args, CommandLine commandLine)
     {
         if(args.length == 0)
         {
@@ -35,26 +35,26 @@ public class Project4 {
             {
                 if(args[i].equals("-README"))
                 {
-                    CommandLine.readMeFlag = true;
+                    commandLine.readMeFlag = true;
                     return;
                 }
-                else if(args[i].equals("-print")) CommandLine.printFlag = true;
-                else if(args[i].equals("-textFile") && CommandLine.textFileFound == false)
+                else if(args[i].equals("-print")) commandLine.printFlag = true;
+                else if(args[i].equals("-textFile") && commandLine.textFileFound == false)
                 {
-                    CommandLine.textFileFound = true;
-                    CommandLine.filePathLoc = i+1;
+                    commandLine.textFileFound = true;
+                    commandLine.filePathLoc = i+1;
                     ++i;
                 }
                 else if(args[i].equals("-pretty"))
                 {
-                    CommandLine.prettyFileFound = true;
-                    CommandLine.prettyPathLoc = i+1;
+                    commandLine.prettyFileFound = true;
+                    commandLine.prettyPathLoc = i+1;
                     ++i;
                 }
                 else if(args[i].equals("-xmlFile"))
                 {
-                    CommandLine.xmlFileFound = true;
-                    CommandLine.xmlPathLoc = i+1;
+                    commandLine.xmlFileFound = true;
+                    commandLine.xmlPathLoc = i+1;
                     ++i;
                 }
                 else
@@ -65,7 +65,7 @@ public class Project4 {
                                                         + "\nValid options include: "
                                                         + "-README, -print, -textFile, -prettyFile, -xmlFile");
                 }
-                if(CommandLine.textFileFound == true && CommandLine.xmlFileFound == true)
+                if(commandLine.textFileFound == true && commandLine.xmlFileFound == true)
                     throw new IllegalArgumentException("ERROR: Cannot use both -textFile and -xmlFile options"
                                                         + "\nOccured at argument " + i
                                                         + "\nError Value: " + args[i]);
@@ -76,21 +76,24 @@ public class Project4 {
                 ++j;
             }
         }
-        CommandLine.flightArgs = holdStr.toArray(new String[holdStr.size()]);
+        commandLine.flightArgs = holdStr.toArray(new String[holdStr.size()]);
     }
 
     public static void main(String[] args)
     {
+        CommandLine commandLine = new CommandLine();
+
         //check for opts
         try {
-            checkArgsOpts(args);
+            checkArgsOpts(args, commandLine);
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage() + "\n" + helpMsg());
             return;
         }
 
+
         //do README
-        if(CommandLine.readMeFlag == true)
+        if(commandLine.readMeFlag == true)
         {
             try {
                 InputStream stream = Project4.class.getClassLoader().getResourceAsStream("edu/pdx/cs/joy/tapet2/README.txt");
@@ -105,12 +108,12 @@ public class Project4 {
         //do textfile parsing
         Airline airline;
         TextParser txtParser;
-        airline = new Airline(CommandLine.flightArgs[0]);
+        airline = new Airline(commandLine.flightArgs[0]);
         txtParser = new TextParser(null);
-        if(CommandLine.textFileFound && !CommandLine.xmlFileFound)
+        if(commandLine.textFileFound && !commandLine.xmlFileFound)
         {
             try {
-                txtParser = new TextParser(new FileReader(new File(args[CommandLine.filePathLoc])));
+                txtParser = new TextParser(new FileReader(new File(args[commandLine.filePathLoc])));
                 airline = txtParser.parse();
             } catch (FileNotFoundException e) {
                 System.err.println("NOTE: Input file not found..."
@@ -124,10 +127,10 @@ public class Project4 {
         }
 
         //xml parsing/dumping
-        if(CommandLine.xmlFileFound && !CommandLine.textFileFound)
+        if(commandLine.xmlFileFound && !commandLine.textFileFound)
         {
             try {
-                XmlParser xmlParser = new XmlParser(CommandLine.flightArgs[CommandLine.xmlPathLoc]);
+                XmlParser xmlParser = new XmlParser(commandLine.flightArgs[commandLine.xmlPathLoc]);
                 airline = xmlParser.parse();
             } catch (ParserException e) {
                 System.err.println("\nERROR: XML Parser exception..." + "\n--CAUSE--\n" + e.getMessage());
@@ -137,10 +140,10 @@ public class Project4 {
 
         //command line flight
         try {
-            if(airline.getName().equals(CommandLine.flightArgs[0]))
+            if(airline.getName().equals(commandLine.flightArgs[0]))
             {
                 FlightParser flightParser = new FlightParser();
-                airline.addFlight(flightParser.parseFlight(Arrays.copyOfRange(CommandLine.flightArgs, 1, CommandLine.flightArgs.length)));
+                airline.addFlight(flightParser.parseFlight(Arrays.copyOfRange(commandLine.flightArgs, 1, commandLine.flightArgs.length)));
             }
             else
             {
@@ -154,10 +157,10 @@ public class Project4 {
         }
 
         //create airline and text output file
-        if(CommandLine.textFileFound && !CommandLine.xmlFileFound)
+        if(commandLine.textFileFound && !commandLine.xmlFileFound)
         {
             try {
-                File file = new File(args[CommandLine.filePathLoc]);
+                File file = new File(args[commandLine.filePathLoc]);
                 TextDumper txtDump;
                 if(file.exists())
                 {
@@ -188,17 +191,17 @@ public class Project4 {
             }
         }
 
-        if(CommandLine.xmlFileFound && !CommandLine.textFileFound)
+        if(commandLine.xmlFileFound && !commandLine.textFileFound)
         {
             //add exception handling?
-            XmlDumper xmlDumper = new XmlDumper(args[CommandLine.xmlPathLoc]);
+            XmlDumper xmlDumper = new XmlDumper(args[commandLine.xmlPathLoc]);
             xmlDumper.dump(airline);
         }
 
         //Pretty option
-        if(CommandLine.prettyFileFound)
+        if(commandLine.prettyFileFound)
         {
-            if(args[CommandLine.prettyPathLoc].equals("-"))
+            if(args[commandLine.prettyPathLoc].equals("-"))
             {
                 System.out.println(airline.getPrettyText());
             }
@@ -206,7 +209,7 @@ public class Project4 {
             {
                 try
                 {
-                    File prettyFile = new File(args[CommandLine.prettyPathLoc]);
+                    File prettyFile = new File(args[commandLine.prettyPathLoc]);
                     PrettyPrinter prettyPrint;
                     if(prettyFile.exists())
                     {
@@ -228,7 +231,7 @@ public class Project4 {
 
 
         //output if -print
-        if(CommandLine.printFlag == true)
+        if(commandLine.printFlag == true)
         {
             System.out.println("\n" + airline.getName() + "\n" + airline.getNewFlightTxt());
         }
