@@ -18,6 +18,10 @@ public class FlightTest {
 
   private Flight testFlight;
 
+  static String replaceNonBreakingSpaces(String string) {
+    return string.replaceAll("\u202F", " ");
+  }
+
   @BeforeEach
   void setUp()
   {
@@ -29,9 +33,9 @@ public class FlightTest {
   {
     assertThat(testFlight.getNumber(), is(133));
     assertThat(testFlight.getSource(), is("PDX"));
-    assertThat(testFlight.getDepartureString(), is("9/8/25, 6:00\u202FAM"));
+    assertThat(replaceNonBreakingSpaces(testFlight.getDepartureString()), is("9/8/25, 6:00 AM"));
     assertThat(testFlight.getDestination(), is("ARN"));
-    assertThat(testFlight.getArrivalString(), is("9/8/25, 7:00\u202FPM"));
+    assertThat(replaceNonBreakingSpaces(testFlight.getArrivalString()), is("9/8/25, 7:00 PM"));
   }
 
   /*@Test
