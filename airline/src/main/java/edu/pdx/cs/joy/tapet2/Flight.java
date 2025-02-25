@@ -62,7 +62,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   @Override
   public String getDepartureString() {
     LocalDateTime dtTemporal = LocalDateTime.parse(departTime, dtFormat);
-    return dtTemporal.format(shortFormat);
+    System.out.println(dtTemporal);
+    return dtTemporal.format(shortFormat).toString();
   }
 
   public String getDepartDay() {
@@ -82,8 +83,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   }
 
   public String getDepartMinute() {
-    return String.valueOf(LocalDateTime.parse(departTime, dtFormat).getMinute());
-
+    int min = LocalDateTime.parse(departTime, dtFormat).getMinute();
+    return min < 10 ? "0" + String.valueOf(min) : String.valueOf(min);
   }
 
   @Override
@@ -114,8 +115,8 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   }
 
   public String getArrivalMinute() {
-    return String.valueOf(LocalDateTime.parse(arrivalTime, dtFormat).getMinute());
-  }
+    int min = LocalDateTime.parse(arrivalTime, dtFormat).getMinute();
+    return min < 10 ? "0" + String.valueOf(min) : String.valueOf(min);  }
 
   public String getFlightText()
   {

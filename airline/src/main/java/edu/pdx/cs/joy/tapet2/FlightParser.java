@@ -44,7 +44,7 @@ public class FlightParser {
         departureDTFormatted = departTemporal.format(dtFormatter);
         } catch (DateTimeParseException e) {
         throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "2, 3, and 4"
-                                                        , args[2] + " " + args[3] + " " + args[4]
+                                                        , args[2] + " " + formatTime(args[3]) + " " + args[4]
                                                         , "Date and Time must be in format: MM/DD/YYYY HH:MM AA"));
         }
         //check arrival code
@@ -66,7 +66,7 @@ public class FlightParser {
         arrivalDTFormatted = arrivalTemporal.format(dtFormatter);
         } catch (DateTimeParseException e) {
         throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "6, 7, and 8"
-                                                        , args[6] + " " + args[7] + " " + args[8]
+                                                        , args[6] + " " + formatTime(args[7]) + " " + args[8]
                                                         , "Date and Time must be in format: MM/DD/YYYY HH:MM AA"));
         }
 
@@ -77,6 +77,11 @@ public class FlightParser {
                                                         , "No time traveling allowed!"));
         //Add parsed and validated flight to airline
         return new Flight(Integer.parseInt(args[0]), args[1].toUpperCase(), departureDTFormatted, args[5].toUpperCase(), arrivalDTFormatted);
+    }
+
+    private String formatTime(String time)
+    {
+        return time.matches("[0-9]:[0-9][0-9]") ? "0" + time : time;
     }
 
     /**
