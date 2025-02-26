@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE airline PUBLIC "-//Joy of Coding at PSU//DTD Airline//EN" "airline.dtd">
 <airline>
-    <name>Project2</name>
+    <name>Project3</name>
     <flight>
         <number>123</number>
         <src>PDX</src>

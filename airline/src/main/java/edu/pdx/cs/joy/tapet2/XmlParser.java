@@ -104,7 +104,7 @@ public class XmlParser implements AirlineParser<Airline> {
         } catch (ParserConfigurationException e) {
             throw new ParserException("ERROR: Parser could not be configured..." + "\n" + e.getMessage());
         } catch (IOException e) {
-            throw new ParserException("ERROR: IO exception on doc builder... " + "\n" + e.getMessage());
+            throw new ParserException("Warning: IO exception on doc builder... Creating new file... " + "\n" + e.getMessage());
         } catch (SAXException e) {
             throw new ParserException("ERROR: SAX exception on doc builder... " + "\n" + e.getMessage());
         } catch (IllegalArgumentException e) {

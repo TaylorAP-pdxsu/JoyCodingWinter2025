@@ -16,12 +16,12 @@ import org.w3c.dom.*;
 public class XmlDumper implements AirlineDumper<Airline>
 {
     private AirlineXmlHelper helper;
-    private String xmlWritePath;
+    private final Writer writer;
 
-    public XmlDumper(String xmlPath)
+    public XmlDumper(Writer writer)
     {
         helper = new AirlineXmlHelper();
-        xmlWritePath = xmlPath;
+        this.writer = writer;
     }
 
     @Override
@@ -107,10 +107,10 @@ public class XmlDumper implements AirlineDumper<Airline>
             System.err.println("ERROR: DOM exception...\n" + e.getMessage());
             return;
         }
-        try
+        try (PrintWriter pw = new PrintWriter(writer))
         {
             Source src = new DOMSource(doc);
-            Result res = new StreamResult(new FileWriter(new File(xmlWritePath)));
+            Result res = new StreamResult(writer);
 
             TransformerFactory xFactory = TransformerFactory.newInstance();
             Transformer xform = xFactory.newTransformer();
@@ -118,11 +118,29 @@ public class XmlDumper implements AirlineDumper<Airline>
             xform.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "-//Joy of Coding at PSU//DTD Airline//EN");
             xform.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "airline.dtd");
             xform.transform(src, res);
-        } catch (IOException e) {
-            
-        }catch (TransformerException e) {
+        } catch (TransformerException e) {
             e.printStackTrace(System.err);
             return;
         }
+    }
+
+    public static boolean airlineMatch(Airline airline, File xmlFile) throws FileNotFoundException, IOException
+    {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(xmlFile));
+            while(reader.readLine() != null)
+            {
+                //found <name> element and it contains correct flight
+                if(reader.readLine().contains("<name>")
+                    && reader.readLine().contains(airline.getName()))
+                    return true;
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException(e.getMessage());
+        } catch (IOException e) {
+            throw new IOException(e.getMessage());
+        }
+        return false;
     }
 }

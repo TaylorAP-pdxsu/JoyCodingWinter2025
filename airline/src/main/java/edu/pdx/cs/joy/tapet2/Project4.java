@@ -138,7 +138,6 @@ public class Project4 {
                                     + "\nCreating new XML file...");
             } catch (ParserException e) {
                 System.err.println("\nERROR: XML Parser exception..." + "\n--CAUSE--\n" + e.getMessage());
-                return;
             }
         }
 
@@ -191,15 +190,42 @@ public class Project4 {
             } catch (FileNotFoundException e) {
                 System.err.println("ERROR: Output file not found...");
             } catch (IOException e) {
-                System.err.println("ERROR: IOException on dump append() function.");
+                System.err.println("ERROR: IOException on dump function.");
             }
         }
 
+        //xmlFile output
         if(commandLine.xmlFileFound && !commandLine.textFileFound)
         {
-            //add exception handling?
-            XmlDumper xmlDumper = new XmlDumper(args[commandLine.xmlPathLoc]);
-            xmlDumper.dump(airline);
+            File xmlFile = new File(args[commandLine.xmlPathLoc]);
+            XmlDumper xmlDumper;
+            try {
+                if(xmlFile.exists())
+                {
+                    
+                    if(XmlDumper.airlineMatch(airline, xmlFile))
+                    {
+                        xmlDumper = new XmlDumper(new FileWriter(xmlFile.getPath()));
+                        xmlDumper.dump(airline);
+                    }
+                    else
+                    {
+                        System.err.println("ERROR: Given airline name from xml input file does not match already existing output file."
+                                        + "\nFIX: Check that airline name on command line and input file matches the output file.");
+                        return;
+                    }
+                }
+                else
+                {
+                    //add exception handling?
+                    xmlDumper = new XmlDumper(new PrintWriter(xmlFile));
+                    xmlDumper.dump(airline);
+                }
+            } catch (FileNotFoundException e) {
+                System.err.println("ERROR: Output xml file not found...");
+            } catch (IOException e) {
+                System.err.println("ERROR: IOException on xml dump function.");
+            }
         }
 
         //Pretty option
@@ -215,16 +241,8 @@ public class Project4 {
                 {
                     File prettyFile = new File(args[commandLine.prettyPathLoc]);
                     PrettyPrinter prettyPrint;
-                    if(prettyFile.exists())
-                    {
-                        prettyPrint = new PrettyPrinter(new FileWriter(prettyFile.getPath()));
-                        prettyPrint.dump(airline);
-                    }
-                    else
-                    { //this else is currently irrelevant
-                        prettyPrint = new PrettyPrinter(new PrintWriter(prettyFile));
-                        prettyPrint.dump(airline);
-                    }
+                    prettyPrint = new PrettyPrinter(new FileWriter(prettyFile.getPath()));
+                    prettyPrint.dump(airline);
                 } catch (FileNotFoundException e) {
                     System.err.println("ERROR: Output file not found...");
                 } catch (IOException e) {
