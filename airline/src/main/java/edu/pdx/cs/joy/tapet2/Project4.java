@@ -119,7 +119,7 @@ public class Project4 {
                 System.err.println("NOTE: Input file not found..."
                                     + "\nContinuing to read from command line with initialized null parser..."
                                     + "\nCreating new file...");
-                //txtParser = new TextParser(null);
+                txtParser = new TextParser(null);
             } catch (ParserException e) {
                 System.err.println("\nERROR: Parser exception..." + "\n--CAUSE-- " + e.getMessage() + "\n");
                 return;
@@ -130,8 +130,12 @@ public class Project4 {
         if(commandLine.xmlFileFound && !commandLine.textFileFound)
         {
             try {
-                XmlParser xmlParser = new XmlParser(commandLine.flightArgs[commandLine.xmlPathLoc]);
+                XmlParser xmlParser = new XmlParser(new File(commandLine.flightArgs[commandLine.xmlPathLoc]));
                 airline = xmlParser.parse();
+            } catch(NullPointerException e) {
+                System.err.println("NOTE: Input XML file not found..."
+                                    + "\nContinuing to read from command line with initialized null parser..."
+                                    + "\nCreating new XML file...");
             } catch (ParserException e) {
                 System.err.println("\nERROR: XML Parser exception..." + "\n--CAUSE--\n" + e.getMessage());
                 return;

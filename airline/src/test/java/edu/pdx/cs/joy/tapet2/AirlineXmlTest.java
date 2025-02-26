@@ -25,7 +25,7 @@ public class AirlineXmlTest {
     XmlDumper dumper = new XmlDumper(xmlFile.getPath());
     dumper.dump(airline);
 
-    XmlParser parser = new XmlParser(xmlFile.getPath());
+    XmlParser parser = new XmlParser(new File(xmlFile.getPath()));
     Airline parsedAirline = parser.parse();
 
     assertThat(parsedAirline.getName(), equalTo(airline.getName()));

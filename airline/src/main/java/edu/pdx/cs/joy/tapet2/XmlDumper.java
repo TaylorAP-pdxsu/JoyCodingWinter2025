@@ -110,7 +110,7 @@ public class XmlDumper implements AirlineDumper<Airline>
         try
         {
             Source src = new DOMSource(doc);
-            Result res = new StreamResult(xmlWritePath);
+            Result res = new StreamResult(new FileWriter(new File(xmlWritePath)));
 
             TransformerFactory xFactory = TransformerFactory.newInstance();
             Transformer xform = xFactory.newTransformer();
@@ -118,7 +118,9 @@ public class XmlDumper implements AirlineDumper<Airline>
             xform.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "-//Joy of Coding at PSU//DTD Airline//EN");
             xform.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "airline.dtd");
             xform.transform(src, res);
-        } catch (TransformerException e) {
+        } catch (IOException e) {
+            
+        }catch (TransformerException e) {
             e.printStackTrace(System.err);
             return;
         }

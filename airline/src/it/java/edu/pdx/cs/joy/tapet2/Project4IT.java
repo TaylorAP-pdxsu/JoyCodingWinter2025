@@ -23,7 +23,7 @@ public class Project4IT extends InvokeMainTestCase {
     MainMethodResult result = invokeMain(Project4.class, commandLine.split(" "));
 
     assertThat(result.getTextWrittenToStandardError(), xmlFile.exists(), equalTo(true));
-    XmlParser parser = new XmlParser(xmlFile.getPath());
+    XmlParser parser = new XmlParser(new File(xmlFile.getPath()));
     Airline airline = parser.parse();
     assertThat(airline.getName(), equalTo(airlineName));
   }

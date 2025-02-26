@@ -21,12 +21,12 @@ import java.io.IOException;
 public class XmlParser implements AirlineParser<Airline> {
 
     private AirlineXmlHelper helper;
-    private String xmlPath;
+    private File xmlFile;
 
-    public XmlParser(String xmlPath)
+    public XmlParser(File xmlFile)
     {
         helper = new AirlineXmlHelper();
-        this.xmlPath = new String(xmlPath);
+        this.xmlFile = xmlFile;
     }
 
     public Airline parse() throws ParserException
@@ -36,7 +36,7 @@ public class XmlParser implements AirlineParser<Airline> {
         FlightParser flightParser = new FlightParser();
         
         try {
-            File xmlFile = new File(xmlPath);
+            
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             dBuilder.setErrorHandler(helper);
