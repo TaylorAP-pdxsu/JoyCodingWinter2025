@@ -130,7 +130,7 @@ public class Project4 {
         if(commandLine.xmlFileFound && !commandLine.textFileFound)
         {
             try {
-                XmlParser xmlParser = new XmlParser(new File(commandLine.flightArgs[commandLine.xmlPathLoc]));
+                XmlParser xmlParser = new XmlParser(new File(args[commandLine.xmlPathLoc]));
                 airline = xmlParser.parse();
             } catch(NullPointerException e) {
                 System.err.println("NOTE: Input XML file not found..."

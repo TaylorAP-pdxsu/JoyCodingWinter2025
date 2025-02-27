@@ -62,7 +62,6 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   @Override
   public String getDepartureString() {
     LocalDateTime dtTemporal = LocalDateTime.parse(departTime, dtFormat);
-    System.out.println(dtTemporal);
     return dtTemporal.format(shortFormat).toString();
   }
 

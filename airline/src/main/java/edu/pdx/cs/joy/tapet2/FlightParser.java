@@ -40,8 +40,8 @@ public class FlightParser {
         LocalDateTime departTemporal;
         String departureDTFormatted;
         try {
-        departTemporal = LocalDateTime.parse(args[2] + " " + args[3] + " " + args[4].toUpperCase(), dtFormatter);
-        departureDTFormatted = departTemporal.format(dtFormatter);
+            departTemporal = LocalDateTime.parse(args[2] + " " + args[3] + " " + args[4].toUpperCase(), dtFormatter);
+            departureDTFormatted = departTemporal.format(dtFormatter);
         } catch (DateTimeParseException e) {
         throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "2, 3, and 4"
                                                         , args[2] + " " + formatTime(args[3]) + " " + args[4]
@@ -62,8 +62,8 @@ public class FlightParser {
         LocalDateTime arrivalTemporal;
         String arrivalDTFormatted;
         try {
-        arrivalTemporal = LocalDateTime.parse(args[6] + " " + args[7] + " " + args[8].toUpperCase(), dtFormatter);
-        arrivalDTFormatted = arrivalTemporal.format(dtFormatter);
+            arrivalTemporal = LocalDateTime.parse(args[6] + " " + args[7] + " " + args[8].toUpperCase(), dtFormatter);
+            arrivalDTFormatted = arrivalTemporal.format(dtFormatter);
         } catch (DateTimeParseException e) {
         throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "6, 7, and 8"
                                                         , args[6] + " " + formatTime(args[7]) + " " + args[8]

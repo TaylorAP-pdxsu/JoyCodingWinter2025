@@ -71,9 +71,9 @@ public class Airline extends AbstractAirline<Flight> {
     {
         prettyText += "\nFlight Number:       " + flight.getNumber();
         prettyText += "\nDeparture Airport:   " + AirportNames.getName(flight.getSource());
-        prettyText += "\nDeparture Time:      " + flight.getDepartureString();
+        prettyText += "\nDeparture Time:      " + flight.getDepartureString().replaceAll("\u202F", " ");
         prettyText += "\nDestination Airport: " + AirportNames.getName(flight.getDestination());
-        prettyText += "\nDestination Time:    " + flight.getArrivalString();
+        prettyText += "\nDestination Time:    " + flight.getArrivalString().replaceAll("\u202F", " ");;
         prettyText += "\nDuration:            " + flight.getDuration() + "min";
         prettyText += "\n";
     }

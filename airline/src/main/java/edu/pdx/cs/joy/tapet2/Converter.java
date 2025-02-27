@@ -24,10 +24,8 @@ public class Converter {
         String filePath = args[0];
         String xmlPath = args[1];
 
-        Airline airline;
-        TextParser txtParser;
-        airline = null;
-        txtParser = null;
+        Airline airline = null;
+        TextParser txtParser = null;
 
         try {
             txtParser = new TextParser(new FileReader(new File(filePath)));

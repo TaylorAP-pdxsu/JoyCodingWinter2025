@@ -126,8 +126,9 @@ public class XmlDumper implements AirlineDumper<Airline>
 
     public static boolean airlineMatch(Airline airline, File xmlFile) throws FileNotFoundException, IOException
     {
+        BufferedReader reader;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(xmlFile));
+            reader = new BufferedReader(new FileReader(xmlFile));
             while(reader.readLine() != null)
             {
                 //found <name> element and it contains correct flight
@@ -141,6 +142,6 @@ public class XmlDumper implements AirlineDumper<Airline>
         } catch (IOException e) {
             throw new IOException(e.getMessage());
         }
-        return false;
+        return true;
     }
 }

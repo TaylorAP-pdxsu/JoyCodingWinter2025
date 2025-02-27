@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE airline PUBLIC "-//Joy of Coding at PSU//DTD Airline//EN" "airline.dtd">
+<airline>
+    <name>Project4</name>
+    <flight>
+        <number>200</number>
+        <src>CWA</src>
+        <depart>
+            <date day="3" month="1" year="2025"/>
+            <time hour="12" minute="14"/>
+        </depart>
+        <dest>DRO</dest>
+        <arrive>
+            <date day="13" month="1" year="2025"/>
+            <time hour="14" minute="45"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>400</number>
+        <src>CVG</src>
+        <depart>
+            <date day="4" month="1" year="2025"/>
+            <time hour="4" minute="00"/>
+        </depart>
+        <dest>DRO</dest>
+        <arrive>
+            <date day="14" month="1" year="2025"/>
+            <time hour="16" minute="00"/>
+        </arrive>
+    </flight>
+    <flight>
+        <number>600</number>
+        <src>LSE</src>
+        <depart>
+            <date day="6" month="1" year="2025"/>
+            <time hour="6" minute="00"/>
+        </depart>
+        <dest>LGB</dest>
+        <arrive>
+            <date day="6" month="1" year="2025"/>
+            <time hour="18" minute="00"/>
+        </arrive>
+    </flight>
+</airline>

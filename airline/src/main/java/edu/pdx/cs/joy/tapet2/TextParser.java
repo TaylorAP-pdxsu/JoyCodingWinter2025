@@ -6,6 +6,9 @@ import edu.pdx.cs.joy.ParserException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 /**
  * TextParser which takes in input or command line args and parses for correct info
@@ -41,7 +44,18 @@ public class TextParser implements AirlineParser<Airline> {
       {
         ++lineNum;
         if(lineParse.isEmpty()) continue;
-        String[] args = lineParse.split(" ");
+        String[] args = lineParse.replaceAll(",", "").replaceAll("\u202F", " ").split(" ");
+        //i-2 and i-6 args
+        if(args[2].matches("[0-9]*/[0-9]*/[0-9][0-9]"))
+        {
+          args[2] = args[2].substring(0, args[2].length()-2) 
+                    + "20" + args[2].substring(args[2].length()-2, args[2].length());
+        }
+        if(args[6].matches("[0-9]*/[0-9]*/[0-9][0-9]"))
+        {
+          args[6] = args[6].substring(0, args[6].length()-2) 
+                    + "20" + args[6].substring(args[6].length()-2, args[6].length());
+        }
         
         //check arg num
         if(args.length != 9) throw new ParserException("Incorrect number of arguments in input file at line " + lineNum);
