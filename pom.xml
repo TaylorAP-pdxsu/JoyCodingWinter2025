@@ -21,6 +21,7 @@ accordingly
   <modules>
     <module>koans</module>
     <module>airline</module>
+    <module>airline-web</module>
   </modules>
   <inceptionYear>2025</inceptionYear>
   <organization>
