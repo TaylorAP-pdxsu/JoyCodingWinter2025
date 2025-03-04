@@ -6,7 +6,6 @@ import edu.pdx.cs.joy.web.HttpRequestHelper;
 import edu.pdx.cs.joy.web.HttpRequestHelper.Response;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.Map;
 
 import static edu.pdx.cs.joy.web.HttpRequestHelper.*;
@@ -41,34 +40,26 @@ public class AirlineRestClient
     }
 
   /**
-   * Returns all dictionary entries from the server
-   */
-  public Map<String, String> getAllDictionaryEntries() throws IOException, ParserException {
-    Response response = http.get(Map.of());
-    throwExceptionIfNotOkayHttpStatus(response);
-
-    TextParser parser = new TextParser(new StringReader(response.getContent()));
-    return parser.parse();
-  }
-
-  /**
    * Returns the definition for the given word
    */
-  public String getDefinition(String word) throws IOException, ParserException {
-    Response response = http.get(Map.of(AirlineServlet.WORD_PARAMETER, word));
+  public Airline getAirline(String airlineName) throws IOException, ParserException {
+    Response response = http.get(Map.of(AirlineServlet.AIRLINE_PARAMETER, airlineName));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
-    TextParser parser = new TextParser(new StringReader(content));
-    return parser.parse().get(word);
+    XmlParser parser = new XmlParser(content);
+    return parser.parse();
   }
 
-  public void addDictionaryEntry(String word, String definition) throws IOException {
-    Response response = http.post(Map.of(AirlineServlet.WORD_PARAMETER, word, AirlineServlet.DEFINITION_PARAMETER, definition));
+  public void addFlight(String airline, Flight flight) throws IOException {
+    Response response = http.post(Map.of(
+                                          AirlineServlet.AIRLINE_PARAMETER, airline
+                                        , AirlineServlet.FLIGHT_NUMBER_PARAMETER, String.valueOf(flight.getNumber())
+                                        ));
     throwExceptionIfNotOkayHttpStatus(response);
   }
 
-  public void removeAllDictionaryEntries() throws IOException {
+  public void removeAllAirlines() throws IOException {
     Response response = http.delete(Map.of());
     throwExceptionIfNotOkayHttpStatus(response);
   }

@@ -22,17 +22,22 @@ public class AirlineRestClientTest {
 
   @Test
   void getAllDictionaryEntriesPerformsHttpGetWithNoParameters() throws ParserException, IOException {
-    Map<String, String> dictionary = Map.of("One", "1", "Two", "2");
+    String airlineName = "Airline Name";
+    Airline airline = new Airline(airlineName);
+    //add a flight
 
     HttpRequestHelper http = mock(HttpRequestHelper.class);
-    when(http.get(eq(Map.of()))).thenReturn(dictionaryAsText(dictionary));
+    when(http.get(eq(Map.of(AirlineServlet.AIRLINE_PARAMETER, airlineName)))).thenReturn(airlineAsText(airline));
     
     AirlineRestClient client = new AirlineRestClient(http);
 
-    assertThat(client.getAllDictionaryEntries(), equalTo(dictionary));
+    Airline airline1 = client.getAirline(airlineName);
+    assertThat(airline1.getName(), equalTo(airlineName));
+    assertThat(airline1.getFlights().size(), equalTo(1));
+    assertThat(airline1.getFlights().iterator().next().getNumber(), equalTo(/*flightNum*/));
   }
 
-  private HttpRequestHelper.Response dictionaryAsText(Map<String, String> dictionary) {
+  private HttpRequestHelper.Response airlineAsText(Map<String, String> dictionary) {
     StringWriter writer = new StringWriter();
     new TextDumper(writer).dump(dictionary);
 

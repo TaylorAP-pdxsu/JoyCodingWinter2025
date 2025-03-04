@@ -29,27 +29,22 @@ class AirlineRestClientIT {
   }
 
   @Test
-  void test0RemoveAllDictionaryEntries() throws IOException {
+  void test0RemoveAllAirlines() throws IOException {
     AirlineRestClient client = newAirlineRestClient();
-    client.removeAllDictionaryEntries();
+    client.removeAllAirlines();
   }
 
   @Test
-  void test1EmptyServerContainsNoDictionaryEntries() throws IOException, ParserException {
+  void test2AddFlight() throws IOException, ParserException {
     AirlineRestClient client = newAirlineRestClient();
-    Map<String, String> dictionary = client.getAllDictionaryEntries();
-    assertThat(dictionary.size(), equalTo(0));
-  }
+    String airlineName = "TEST Airline";
+    Flight flight = new Flight();
+    client.addFlight(airlineName, flight);
 
-  @Test
-  void test2DefineOneWord() throws IOException, ParserException {
-    AirlineRestClient client = newAirlineRestClient();
-    String testWord = "TEST WORD";
-    String testDefinition = "TEST DEFINITION";
-    client.addDictionaryEntry(testWord, testDefinition);
-
-    String definition = client.getDefinition(testWord);
-    assertThat(definition, equalTo(testDefinition));
+    Airline airline = client.getAirline(airlineName);
+    assertThat(airline.getName(), equalTo(airlineName));
+    assertThat(airline.getFlights().size(), equalTo(1));
+    assertThat(airline.getFlights().iterator().next(), equalTo(flight));
   }
 
   @Test
@@ -58,7 +53,7 @@ class AirlineRestClientIT {
     String emptyString = "";
 
     HttpRequestHelper.RestException ex =
-      assertThrows(HttpRequestHelper.RestException.class, () -> client.addDictionaryEntry(emptyString, emptyString));
+      assertThrows(HttpRequestHelper.RestException.class, () -> client.addFlight(emptyString, emptyString));
     assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
-    assertThat(ex.getMessage(), containsString(Messages.missingRequiredParameter(AirlineServlet.WORD_PARAMETER)));
+    assertThat(ex.getMessage(), containsString(Messages.missingRequiredParameter(AirlineServlet.AIRLINE_PARAMETER)));
   }}
