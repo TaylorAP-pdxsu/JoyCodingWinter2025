@@ -20,7 +20,7 @@ public class AirlineServlet extends HttpServlet {
   static final String AIRLINE_PARAMETER = "word";
   static final String FLIGHT_NUMBER_PARAMETER = "definition";
 
-  private final Map<String, String> dictionary = new HashMap<>();
+  private final Map<String, Airline> airlines = new HashMap<>();
 
   /**
    * Handles an HTTP GET request from a client by writing the definition of the
@@ -36,11 +36,10 @@ public class AirlineServlet extends HttpServlet {
       String word = getParameter( AIRLINE_PARAMETER, request );
       if (word != null) {
           log("GET " + word);
-          writeDefinition(word, response);
+          writeAirline(word, response);
 
       } else {
-          log("GET all dictionary entries");
-          writeAllDictionaryEntries(response);
+          missingRequiredParameter(response, AIRLINE_PARAMETER);
       }
   }
 
@@ -54,24 +53,24 @@ public class AirlineServlet extends HttpServlet {
   {
       response.setContentType( "text/plain" );
 
-      String word = getParameter(AIRLINE_PARAMETER, request );
-      if (word == null) {
+      String airlineName = getParameter(AIRLINE_PARAMETER, request );
+      if (airlineName == null) {
           missingRequiredParameter(response, AIRLINE_PARAMETER);
           return;
       }
 
-      String definition = getParameter(FLIGHT_NUMBER_PARAMETER, request );
-      if ( definition == null) {
+      String flightNumStr = getParameter(FLIGHT_NUMBER_PARAMETER, request );
+      if ( flightNumStr == null) {
           missingRequiredParameter( response, FLIGHT_NUMBER_PARAMETER );
           return;
       }
 
-      log("POST " + word + " -> " + definition);
+      log("POST " + airlineName + " -> " + flightNumStr);
 
-      this.dictionary.put(word, definition);
+      this.airlines.put(airlineName, airline);
 
       PrintWriter pw = response.getWriter();
-      pw.println(Messages.prettyPrintFlight(word, definition));
+      pw.println(Messages.prettyPrintFlight(airlineName, flightNumStr));
       pw.flush();
 
       response.setStatus( HttpServletResponse.SC_OK);
@@ -88,7 +87,7 @@ public class AirlineServlet extends HttpServlet {
 
       log("DELETE all dictionary entries");
 
-      this.dictionary.clear();
+      this.airlines.clear();
 
       PrintWriter pw = response.getWriter();
       pw.println(Messages.allDictionaryEntriesDeleted());
@@ -113,10 +112,10 @@ public class AirlineServlet extends HttpServlet {
   /**
    * Writes the definition of the given word to the HTTP response.
    *
-   * The text of the message is formatted with {@link TextDumper}
+   * The text of the message is formatted with {@link XmlDumper}
    */
-  private void writeDefinition(String word, HttpServletResponse response) throws IOException {
-    String definition = this.dictionary.get(word);
+  private void writeAirline(String airlineName, HttpServletResponse response) throws IOException {
+    Airline definition = this.airlines.get(airlineName);
 
     if (definition == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -124,26 +123,11 @@ public class AirlineServlet extends HttpServlet {
     } else {
       PrintWriter pw = response.getWriter();
 
-      Map<String, String> wordDefinition = Map.of(word, definition);
-      TextDumper dumper = new TextDumper(pw);
-      dumper.dump(wordDefinition);
+      XmlDumper dumper = new XmlDumper(pw);
+      dumper.dump(airline);
 
       response.setStatus(HttpServletResponse.SC_OK);
     }
-  }
-
-  /**
-   * Writes all of the dictionary entries to the HTTP response.
-   *
-   * The text of the message is formatted with {@link TextDumper}
-   */
-  private void writeAllDictionaryEntries(HttpServletResponse response ) throws IOException
-  {
-      PrintWriter pw = response.getWriter();
-      TextDumper dumper = new TextDumper(pw);
-      dumper.dump(dictionary);
-
-      response.setStatus( HttpServletResponse.SC_OK );
   }
 
   /**
@@ -163,12 +147,17 @@ public class AirlineServlet extends HttpServlet {
   }
 
   @VisibleForTesting
-  String getDefinition(String word) {
-      return this.dictionary.get(word);
+  Airline getAirline(String airlineName) {
+      return this.airlines.get(airlineName);
   }
 
   @Override
   public void log(String msg) {
     System.out.println(msg);
+  }
+
+  @VisibleForTesting
+  public void addAirline(Airline airline) {
+    this.airlines.put(airline.getName(), airline);
   }
 }
