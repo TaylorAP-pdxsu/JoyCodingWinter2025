@@ -35,7 +35,6 @@ public class CommandLine {
         {
             throw new IllegalArgumentException("ERROR: No command line args given.");
         }
-
         for(int i = 0; i < args.length; ++i)
         {
             if(args[i].charAt(0) == '-')
@@ -71,7 +70,7 @@ public class CommandLine {
             else
             {
                 airlineName = args[i];
-                flightArgs = Arrays.copyOfRange(args, i+1, i+9);
+                flightArgs = Arrays.copyOfRange(args, i+1, i+10);
                 i += 9;
             }
         }

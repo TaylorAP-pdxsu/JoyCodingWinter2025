@@ -18,7 +18,7 @@ public class FlightParser {
     public Flight parseFlight(String[] args) throws ParserException
     {
         if(args.length > 9)
-        throw new ParserException(createExceptStr("Unknown args given after flight information.", ">9", args[7]
+        throw new ParserException(createExceptStr("Unknown args given after flight information.", ">9", args[9]
                                                         , "Cannot contain more than 9 args after airline name."));
         //check flight num
         if(!args[0].matches("\\d+"))

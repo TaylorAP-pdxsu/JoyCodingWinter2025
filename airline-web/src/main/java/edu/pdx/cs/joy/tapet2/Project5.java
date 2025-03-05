@@ -14,11 +14,20 @@ public class Project5 {
 
     public static final String MISSING_ARGS = "Missing command line arguments";
 
-    public static void main(String... args) {
+    public static void main(String[] args) {
         CommandLine cmds = new CommandLine();
+        try {
+            cmds.parseArgs(args);
+        } catch (IllegalArgumentException e) {
+            usage(e.getMessage());
+        }
+
         String hostName = (cmds.hostNameLoc == -1 ? null : args[cmds.hostNameLoc]);
         String portString = (cmds.portLoc == -1 ? null : args[cmds.portLoc]);
         String airlineName = cmds.airlineName;
+
+        Airline airline = null;
+        Flight flight = null;
 
         if (hostName == null) {
             usage( MISSING_ARGS );
@@ -48,17 +57,29 @@ public class Project5 {
 
             } else if (cmds.searchAirlineLoc != -1) {
                 // Pretty print the airline
-                Airline airline = client.getAirline(airlineName);
+                airline = client.getAirline(airlineName);
                 StringWriter sw = new StringWriter();
                 new PrettyPrinter(sw).dump(airline);
                 message = sw.toString();
 
             } else {
-                // Post the word/definition pair
+                // Post the airline/flight
                 FlightParser flightParser = new FlightParser();
-                Flight flight = flightParser.parseFlight(args);
+                flight = flightParser.parseFlight(cmds.flightArgs);
                 client.addFlight(airlineName, flight);
                 message = Messages.prettyPrintFlight(airlineName, String.valueOf(flight.getNumber()));
+            }
+            if(cmds.printFlag == true)
+            {
+                airline = client.getAirline(airlineName);
+                if(airline == null)
+                {
+                    System.out.println("Airline is null...");
+                }
+                else
+                {
+                    System.out.println(("\n" + airline.getName() + "\n" + airline.getNewFlightTxt()).replaceAll("\u202F", " "));
+                }
             }
 
         } catch (IOException | ParserException ex ) {
@@ -90,11 +111,6 @@ public class Project5 {
         err.println("  airline      Name of airline");
         err.println("  flightNum    Flight Number");
         err.println();
-        err.println("This simple program posts words and their definitions");
-        err.println("to the server.");
-        err.println("If no definition is specified, then the word's definition");
-        err.println("is printed.");
-        err.println("If no word is specified, all dictionary entries are printed");
         err.println();
     }
 }
