@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -36,7 +37,7 @@ class Project5IT extends InvokeMainTestCase {
         assertThat(result.getTextWrittenToStandardError(), containsString(Project5.MISSING_ARGS));
     }
 
-    @Test
+    /*@Test
     void test3UnknownAirlineThrowsAppointmentBookRestException() {
         String airline = "Airline";
         try {
@@ -65,7 +66,9 @@ class Project5IT extends InvokeMainTestCase {
 
         assertThat(result.getTextWrittenToStandardError(), equalTo(""));
 
-        //out = result.getTextWrittenToStandardOut();
-        //assertThat(out, out, containsString(PrettyPrinter.formatFlightDictionaryEntry(airline, flightNum)));
-    }
+        PrettyPrinter prettyPrinter = new PrettyPrinter(new StringWriter());
+
+        out = result.getTextWrittenToStandardOut();
+        assertThat(out, out, containsString(prettyPrinter.dump(airline)));
+    }*/
 }

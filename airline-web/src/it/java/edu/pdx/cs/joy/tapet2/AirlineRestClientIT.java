@@ -8,7 +8,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -53,7 +52,7 @@ class AirlineRestClientIT {
     String emptyString = "";
 
     HttpRequestHelper.RestException ex =
-      assertThrows(HttpRequestHelper.RestException.class, () -> client.addFlight(emptyString, emptyString));
+      assertThrows(HttpRequestHelper.RestException.class, () -> client.addFlight(emptyString, new Flight()));
     assertThat(ex.getHttpStatusCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
     assertThat(ex.getMessage(), containsString(Messages.missingRequiredParameter(AirlineServlet.AIRLINE_PARAMETER)));
   }}

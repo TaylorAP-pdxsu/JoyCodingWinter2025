@@ -67,6 +67,10 @@ public class AirlineServlet extends HttpServlet {
 
       log("POST " + airlineName + " -> " + flightNumStr);
 
+      int flightNum = Integer.parseInt(flightNumStr);
+      Airline airline = new Airline(airlineName);
+      airline.addFlight(new Flight(flightNum, "PDX", "09/08/2025 06:00 AM", "ARN", "09/08/2025 07:31 PM"));
+
       this.airlines.put(airlineName, airline);
 
       PrintWriter pw = response.getWriter();
@@ -115,9 +119,9 @@ public class AirlineServlet extends HttpServlet {
    * The text of the message is formatted with {@link XmlDumper}
    */
   private void writeAirline(String airlineName, HttpServletResponse response) throws IOException {
-    Airline definition = this.airlines.get(airlineName);
+    Airline airline = this.airlines.get(airlineName);
 
-    if (definition == null) {
+    if (airline == null) {
       response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
     } else {

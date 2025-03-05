@@ -6,6 +6,7 @@ import edu.pdx.cs.joy.web.HttpRequestHelper;
 import edu.pdx.cs.joy.web.HttpRequestHelper.Response;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.Map;
 
 import static edu.pdx.cs.joy.web.HttpRequestHelper.*;
@@ -47,7 +48,7 @@ public class AirlineRestClient
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
-    XmlParser parser = new XmlParser(content);
+    XmlParser parser = new XmlParser(new StringReader(content));
     return parser.parse();
   }
 

@@ -40,7 +40,7 @@ public class AirlineRestClientTest {
 
   private HttpRequestHelper.Response airlineAsText(Airline airline) {
     StringWriter writer = new StringWriter();
-    new TextDumper(writer).dump(airline);
+    new XmlDumper(writer).dump(airline);
 
     return new HttpRequestHelper.Response(writer.toString());
   }

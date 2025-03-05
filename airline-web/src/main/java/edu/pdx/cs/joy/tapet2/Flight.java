@@ -50,6 +50,17 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
   }
 
   @Override
+  public boolean equals(Object obj)
+  {
+    if(obj instanceof Flight)
+    {
+      Flight other = (Flight) obj;
+      return this.flightNum == other.flightNum;
+    }
+    return false;
+  }
+
+  @Override
   public int getNumber() {
     return flightNum;
   }

@@ -8,6 +8,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -18,13 +19,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 
 public class XmlParser implements AirlineParser<Airline> {
-    private final InputStream stream;
     private AirlineXmlHelper helper;
+    private final Reader reader;
 
-    public XmlParser(String content)
+    public XmlParser(Reader reader)
     {
         helper = new AirlineXmlHelper();
-        this.stream = new ByteArrayInputStream(content.getBytes());
+        this.reader = reader;
     }
 
     public Airline parse() throws ParserException
@@ -39,7 +40,7 @@ public class XmlParser implements AirlineParser<Airline> {
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             dBuilder.setErrorHandler(helper);
             dBuilder.setEntityResolver(helper);
-            Document doc = dBuilder.parse(stream);
+            Document doc = dBuilder.parse(new InputSource(reader));
 
             doc.getDocumentElement().normalize();
 
