@@ -134,6 +134,16 @@ public class Flight extends AbstractFlight implements Comparable<Flight>  {
                         + getDepartureString() + " " + destAirport + " " + getArrivalString());
   }
 
+  public String getDepartParserFormat()
+  {
+    return new String(LocalDateTime.parse(departTime, dtFormat).format(dtFormat));
+  }
+
+  public String getArrivalParserFormat()
+  {
+    return new String(LocalDateTime.parse(arrivalTime, dtFormat).format(dtFormat));
+  }
+
   public String getDuration() {
     LocalDateTime departAt = LocalDateTime.parse(departTime, dtFormat);
     LocalDateTime arriveAt = LocalDateTime.parse(arrivalTime, dtFormat);

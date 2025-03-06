@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.*;
+import java.util.Arrays;
 
 /**
  * This servlet ultimately provides a REST API for working with an
@@ -183,8 +186,21 @@ public class AirlineServlet extends HttpServlet {
     }
   }
 
+  public Map<String, Flight[]> getDirectFlights(String src, String dest)
+  {
+    Map<String, Flight[]> map = new HashMap<>();
+    airlines.forEach((String key, Airline airline) -> 
+    map.put(airline.getName(),
+        airline.getFlights().stream()
+            .filter(flight -> flight.getSource().equals(src) 
+                             && flight.getDestination().equals(dest))
+            .toArray(Flight[]::new)
+            ));
+    return map;
+  }
+
   @VisibleForTesting
-  Airline getAirline(String airlineName) {
+  public Airline getAirline(String airlineName) {
       return this.airlines.get(airlineName);
   }
 
