@@ -19,12 +19,12 @@ import java.util.Map;
  * and their definitions.
  */
 public class AirlineServlet extends HttpServlet {
-  static final String AIRLINE_PARAMETER = "default";
-  static final String FLIGHT_NUMBER_PARAMETER = "default";
-  static final String SRC_AIRPORT = "default";
-  static final String SRC_DATE_TIME = "default";
-  static final String DEST_AIRPORT = "default";
-  static final String DEST_DATE_TIME = "default";
+  static final String AIRLINE_PARAMETER = "airlineName";
+  static final String FLIGHT_NUMBER_PARAMETER = "flightNum";
+  static final String SRC_AIRPORT = "srcAirport";
+  static final String SRC_DATE_TIME = "srcDateTime";
+  static final String DEST_AIRPORT = "destAirport";
+  static final String DEST_DATE_TIME = "destDateTime";
 
   private final Map<String, Airline> airlines = new HashMap<>();
 

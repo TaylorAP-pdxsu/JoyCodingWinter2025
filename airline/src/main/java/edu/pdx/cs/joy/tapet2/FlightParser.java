@@ -39,8 +39,13 @@ public class FlightParser {
         DateTimeFormatter dtFormatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
         LocalDateTime departTemporal;
         String departureDTFormatted;
+        if(args[2].matches("[0-9]*/[0-9]*/[0-9][0-9]"))
+        {
+          args[2] = args[2].substring(0, args[2].length()-2) 
+                    + "20" + args[2].substring(args[2].length()-2, args[2].length());
+        }
         try {
-            departTemporal = LocalDateTime.parse(args[2] + " " + args[3] + " " + args[4].toUpperCase(), dtFormatter);
+            departTemporal = LocalDateTime.parse((args[2] + " " + args[3] + " " + args[4].toUpperCase()).replaceAll("\u202F", " "), dtFormatter);
             departureDTFormatted = departTemporal.format(dtFormatter);
         } catch (DateTimeParseException e) {
         throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "2, 3, and 4"
@@ -61,8 +66,13 @@ public class FlightParser {
         //check departure date/time
         LocalDateTime arrivalTemporal;
         String arrivalDTFormatted;
+        if(args[6].matches("[0-9]*/[0-9]*/[0-9][0-9]"))
+        {
+          args[6] = args[6].substring(0, args[6].length()-2) 
+                    + "20" + args[6].substring(args[6].length()-2, args[6].length());
+        }
         try {
-            arrivalTemporal = LocalDateTime.parse(args[6] + " " + args[7] + " " + args[8].toUpperCase(), dtFormatter);
+            arrivalTemporal = LocalDateTime.parse((args[6] + " " + args[7] + " " + args[8].toUpperCase()).replaceAll("\u202F", " "), dtFormatter);
             arrivalDTFormatted = arrivalTemporal.format(dtFormatter);
         } catch (DateTimeParseException e) {
         throw new ParserException(createExceptStr(e.getMessage() + "\n\nDate and/or Time given in unreadable format.", "6, 7, and 8"
