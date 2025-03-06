@@ -2,11 +2,13 @@ package edu.pdx.cs.joy.tapet2;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import edu.pdx.cs.joy.web.HttpRequestHelper.Response;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,8 +19,12 @@ import java.util.Map;
  * and their definitions.
  */
 public class AirlineServlet extends HttpServlet {
-  static final String AIRLINE_PARAMETER = "word";
-  static final String FLIGHT_NUMBER_PARAMETER = "definition";
+  static final String AIRLINE_PARAMETER = "default";
+  static final String FLIGHT_NUMBER_PARAMETER = "default";
+  static final String SRC_AIRPORT = "default";
+  static final String SRC_DATE_TIME = "default";
+  static final String DEST_AIRPORT = "default";
+  static final String DEST_DATE_TIME = "default";
 
   private final Map<String, Airline> airlines = new HashMap<>();
 
@@ -65,11 +71,38 @@ public class AirlineServlet extends HttpServlet {
           return;
       }
 
+      String srcAirport = getParameter(SRC_AIRPORT, request);
+      if(srcAirport == null) {
+        missingRequiredParameter(response, SRC_AIRPORT);
+        return;
+      }
+
+      String srcDateTime = getParameter(SRC_DATE_TIME, request);
+      if(srcDateTime == null) {
+        missingRequiredParameter(response, SRC_DATE_TIME);
+        return;
+      }
+
+      String destAirport = getParameter(DEST_AIRPORT, request);
+      if(destAirport == null) {
+        missingRequiredParameter(response, DEST_AIRPORT);
+        return;
+      }
+
+      String destDateTime = getParameter(DEST_DATE_TIME, request);
+      if(destDateTime == null) {
+        missingRequiredParameter(response, DEST_DATE_TIME);
+        return;
+      }
+
       log("POST " + airlineName + " -> " + flightNumStr);
 
-      int flightNum = Integer.parseInt(flightNumStr);
-      Airline airline = new Airline(airlineName);
-      airline.addFlight(new Flight(flightNum, "PDX", "09/08/2025 06:00 AM", "ARN", "09/08/2025 07:31 PM"));
+      Airline airline = this.airlines.get(airlineName);
+      if(airline == null)
+      {
+        airline = new Airline(airlineName);
+      }
+      airline.addFlight(new Flight(Integer.parseInt(flightNumStr), srcAirport, srcDateTime, destAirport, destDateTime));
 
       this.airlines.put(airlineName, airline);
 
@@ -138,7 +171,7 @@ public class AirlineServlet extends HttpServlet {
    * Returns the value of the HTTP request parameter with the given name.
    *
    * @return <code>null</code> if the value of the parameter is
-   *         <code>null</code> or is the empty string
+   *         <code>null</code> or is the default string
    */
   private String getParameter(String name, HttpServletRequest request) {
     String value = request.getParameter(name);
@@ -164,4 +197,5 @@ public class AirlineServlet extends HttpServlet {
   public void addAirline(Airline airline) {
     this.airlines.put(airline.getName(), airline);
   }
+
 }

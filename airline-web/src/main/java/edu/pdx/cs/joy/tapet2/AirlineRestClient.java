@@ -54,9 +54,13 @@ public class AirlineRestClient
 
   public void addFlight(String airline, Flight flight) throws IOException {
     Response response = http.post(Map.of(
-                                          AirlineServlet.AIRLINE_PARAMETER, airline
-                                        , AirlineServlet.FLIGHT_NUMBER_PARAMETER, String.valueOf(flight.getNumber())
-                                        ));
+                            AirlineServlet.AIRLINE_PARAMETER, airline
+                          , AirlineServlet.FLIGHT_NUMBER_PARAMETER, String.valueOf(flight.getNumber())
+                          , AirlineServlet.SRC_AIRPORT, flight.getSource()
+                          , AirlineServlet.SRC_DATE_TIME, flight.getDepartureString().replaceAll("\u202F", " ")
+                          , AirlineServlet.DEST_AIRPORT, flight.getDestination()
+                          , AirlineServlet.DEST_DATE_TIME, flight.getArrivalString().replaceAll("\u202F", " ")
+                          ));
     throwExceptionIfNotOkayHttpStatus(response);
   }
 
