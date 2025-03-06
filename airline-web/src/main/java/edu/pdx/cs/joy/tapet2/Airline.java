@@ -44,6 +44,11 @@ public class Airline extends AbstractAirline<Flight> {
     flights.add(flight);
   }
 
+  public void setFlights(ArrayList<Flight> source)
+  {
+    flights = source;
+  }
+
   @Override
   public ArrayList<Flight> getFlights() {
     return flights;

@@ -1,6 +1,8 @@
 package edu.pdx.cs.joy.tapet2;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.inject.multibindings.ClassMapKey;
+
 import edu.pdx.cs.joy.ParserException;
 import edu.pdx.cs.joy.web.HttpRequestHelper;
 import edu.pdx.cs.joy.web.HttpRequestHelper.Response;
@@ -56,15 +58,16 @@ public class AirlineRestClient
     return parser.parse();
   }
 
-  public Map<String, Flight[]> getDirectFlights(String src, String dest) throws IllegalArgumentException
+  public Airline getDirectFlights(String airlineName, String src, String dest) throws IOException, ParserException
   {
-    if(AirportNames.getName(src) == null || AirportNames.getName(dest) == null)
-    {
-      throw new IllegalArgumentException("Search for depart and/or arrival airports failed..."
-                                          + "\nAirport code must be 3 letters and valid, existing, airports...");
-    }
-    //servlet direct flights
-    
+    Response response = http.get(Map.of(AirlineServlet.AIRLINE_PARAMETER, airlineName
+                                        , AirlineServlet.SRC_SEARCH, src
+                                        , AirlineServlet.DEST_SEARCH, dest));
+    throwExceptionIfNotOkayHttpStatus(response);
+    String content = response.getContent();
+
+    XmlParser parser = new XmlParser(new StringReader(content));
+    return parser.parse();
   }
 
   public void addFlight(String airlineName, Flight flight) throws IOException {
