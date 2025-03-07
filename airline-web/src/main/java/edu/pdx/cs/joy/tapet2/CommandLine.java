@@ -92,7 +92,7 @@ public class CommandLine {
                 && AirportNames.getName(args[searchAirlineLoc+2]) != null)
             {
                 searchSrcLoc = searchAirlineLoc + 1;
-                searchDestLoc = searchDestLoc + 2;
+                searchDestLoc = searchAirlineLoc + 2;
                 return 2;
             }
         }

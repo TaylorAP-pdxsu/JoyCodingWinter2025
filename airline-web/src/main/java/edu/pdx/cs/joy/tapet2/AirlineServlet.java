@@ -29,8 +29,8 @@ public class AirlineServlet extends HttpServlet {
   static final String SRC_DATE_TIME = "srcDateTime";
   static final String DEST_AIRPORT = "destAirport";
   static final String DEST_DATE_TIME = "destDateTime";
-  static final String SRC_SEARCH = "srcSearch";
-  static final String DEST_SEARCH = "destSearch";
+  static final String SRC = "srcSearch";
+  static final String DEST = "destSearch";
 
   private final Map<String, Airline> airlines = new HashMap<>();
 
@@ -46,11 +46,12 @@ public class AirlineServlet extends HttpServlet {
       response.setContentType( "text/plain" );
 
       String airlineName = getParameter( AIRLINE_PARAMETER, request );
-      String srcSearch = getParameter(SRC_SEARCH, request);
-      String destSearch = getParameter(DEST_SEARCH, request);
+      String srcSearch = getParameter(SRC, request);
+      String destSearch = getParameter(DEST, request);
+      log("airline: " + airlineName + " src: " + srcSearch + " dest: " + destSearch);
       if(airlineName != null && srcSearch != null && destSearch != null)
       {
-        log("GET " + "flights with " + airlineName + "from " + srcSearch + "to " + destSearch);
+        log("GET " + "flights with " + airlineName + " from " + srcSearch + " to " + destSearch);
         writeDirectFlights(airlineName, srcSearch, destSearch, response);
       }
       else if (airlineName != null) {
@@ -183,7 +184,8 @@ public class AirlineServlet extends HttpServlet {
   private void writeDirectFlights(String airlineName
                                   , String src
                                   , String dest
-                                  , HttpServletResponse response) throws IOException {
+                                  , HttpServletResponse response) throws IOException
+  {
     Airline airline = this.airlines.get(airlineName);
 
     if (airline == null) {
@@ -196,8 +198,8 @@ public class AirlineServlet extends HttpServlet {
       direct.setFlights(airline.getFlights()
                               .stream()
                               .filter((Flight flight) -> flight.getSource().equals(src)
-                                                                      && flight.getDestination()
-                              .equals(dest)).collect(Collectors.toCollection(ArrayList<Flight>::new)));
+                                                                      && flight.getDestination().equals(dest))
+                                                                      .collect(Collectors.toCollection(ArrayList<Flight>::new)));
 
       XmlDumper dumper = new XmlDumper(pw);
       dumper.dump(direct);

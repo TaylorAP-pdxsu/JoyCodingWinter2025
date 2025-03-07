@@ -61,8 +61,8 @@ public class AirlineRestClient
   public Airline getDirectFlights(String airlineName, String src, String dest) throws IOException, ParserException
   {
     Response response = http.get(Map.of(AirlineServlet.AIRLINE_PARAMETER, airlineName
-                                        , AirlineServlet.SRC_SEARCH, src
-                                        , AirlineServlet.DEST_SEARCH, dest));
+                                        , AirlineServlet.SRC, src
+                                        , AirlineServlet.DEST, dest));
     throwExceptionIfNotOkayHttpStatus(response);
     String content = response.getContent();
 
