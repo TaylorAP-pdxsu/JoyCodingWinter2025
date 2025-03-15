@@ -57,7 +57,11 @@ public class Project5 {
 
             } else if (cmds.searchAirlineLoc != -1) {
                 // Pretty print the airline
-                airline = client.getAirline(airlineName);
+                if(cmds.searchSrcLoc != -1 && cmds.searchDestLoc != -1)
+                    airline = client.getDirectFlights(args[cmds.searchAirlineLoc], args[cmds.searchSrcLoc], args[cmds.searchDestLoc]);
+                else
+                    airline = client.getAirline(airlineName);
+                    
                 StringWriter sw = new StringWriter();
                 new PrettyPrinter(sw).dump(airline);
                 message = sw.toString();

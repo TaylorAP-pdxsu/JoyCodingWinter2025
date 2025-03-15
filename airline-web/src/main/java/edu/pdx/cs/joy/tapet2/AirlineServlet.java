@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.*;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * This servlet ultimately provides a REST API for working with an
@@ -28,6 +29,8 @@ public class AirlineServlet extends HttpServlet {
   static final String SRC_DATE_TIME = "srcDateTime";
   static final String DEST_AIRPORT = "destAirport";
   static final String DEST_DATE_TIME = "destDateTime";
+  static final String SRC = "srcSearch";
+  static final String DEST = "destSearch";
 
   private final Map<String, Airline> airlines = new HashMap<>();
 
@@ -42,10 +45,18 @@ public class AirlineServlet extends HttpServlet {
   {
       response.setContentType( "text/plain" );
 
-      String word = getParameter( AIRLINE_PARAMETER, request );
-      if (word != null) {
-          log("GET " + word);
-          writeAirline(word, response);
+      String airlineName = getParameter( AIRLINE_PARAMETER, request );
+      String srcSearch = getParameter(SRC, request);
+      String destSearch = getParameter(DEST, request);
+      log("airline: " + airlineName + " src: " + srcSearch + " dest: " + destSearch);
+      if(airlineName != null && srcSearch != null && destSearch != null)
+      {
+        log("GET " + "flights with " + airlineName + " from " + srcSearch + " to " + destSearch);
+        writeDirectFlights(airlineName, srcSearch, destSearch, response);
+      }
+      else if (airlineName != null) {
+          log("GET " + airlineName);
+          writeAirline(airlineName, response);
 
       } else {
           missingRequiredParameter(response, AIRLINE_PARAMETER);
@@ -170,6 +181,33 @@ public class AirlineServlet extends HttpServlet {
     }
   }
 
+  private void writeDirectFlights(String airlineName
+                                  , String src
+                                  , String dest
+                                  , HttpServletResponse response) throws IOException
+  {
+    Airline airline = this.airlines.get(airlineName);
+
+    if (airline == null) {
+      response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+    } else {
+      PrintWriter pw = response.getWriter();
+
+      Airline direct = new Airline(airline.getName());
+      direct.setFlights(airline.getFlights()
+                              .stream()
+                              .filter((Flight flight) -> flight.getSource().equals(src)
+                                                                      && flight.getDestination().equals(dest))
+                                                                      .collect(Collectors.toCollection(ArrayList<Flight>::new)));
+
+      XmlDumper dumper = new XmlDumper(pw);
+      dumper.dump(direct);
+
+      response.setStatus(HttpServletResponse.SC_OK);
+    }
+  }
+
   /**
    * Returns the value of the HTTP request parameter with the given name.
    *
@@ -184,19 +222,6 @@ public class AirlineServlet extends HttpServlet {
     } else {
       return value;
     }
-  }
-
-  public Map<String, Flight[]> getDirectFlights(String src, String dest)
-  {
-    Map<String, Flight[]> map = new HashMap<>();
-    airlines.forEach((String key, Airline airline) -> 
-    map.put(airline.getName(),
-        airline.getFlights().stream()
-            .filter(flight -> flight.getSource().equals(src) 
-                             && flight.getDestination().equals(dest))
-            .toArray(Flight[]::new)
-            ));
-    return map;
   }
 
   @VisibleForTesting

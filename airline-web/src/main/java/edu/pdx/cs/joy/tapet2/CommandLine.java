@@ -90,7 +90,11 @@ public class CommandLine {
         {
             if(AirportNames.getName(args[searchAirlineLoc+1]) != null
                 && AirportNames.getName(args[searchAirlineLoc+2]) != null)
+            {
+                searchSrcLoc = searchAirlineLoc + 1;
+                searchDestLoc = searchAirlineLoc + 2;
                 return 2;
+            }
         }
         return 0;
     }
