@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Airline</string>
+    <string name="airline_resources">Airline Project</string>
+    <string name="README">
+        Taylor A. Pettingill
+        \nProject 6
+        \nThis is a README for project 6. This project runs on a Pixel 5 Emulator.
+        Press the Launch button to begin the application. There you can add
+        flights and airlines, as well as search for flights. Enjoy!
+    </string>
+    <string name="FlightEntryStr">
+        <![CDATA[Add a flight by filling in the form below and pressing the
+        <Add Flight> button below]]>
+    </string>
 </resources>
