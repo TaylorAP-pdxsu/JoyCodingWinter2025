@@ -12,11 +12,10 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/red_bg"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="Flight Form"
-        android:textColor="@color/white"
+        android:textColor="@color/red_bg"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +95,7 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Enter Departure Time"
-        android:inputType="text"
+        android:inputType="datetime"
         android:textColor="@color/white"
         android:textColorHint="@color/light_grey"
         app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +127,7 @@
         android:layout_marginTop="24dp"
         android:ems="10"
         android:hint="Enter Arrival Time"
-        android:inputType="text"
+        android:inputType="datetime"
         android:textColor="@color/white"
         android:textColorHint="@color/light_grey"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,15 +149,40 @@
         tools:ignore="HardcodedText" />
 
     <Button
+        android:id="@+id/buttonViewAirline"
+        style="@style/ButtonStyle"
+        android:onClick="ViewAirlinePage_OnButtonClick"
+        android:text="View Airline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonSearchPage"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSave"
+        app:layout_constraintVertical_bias="0.392"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        style="@style/ButtonStyle"
+        android:layout_marginBottom="116dp"
+        android:onClick="SaveAirline_OnButtonClick"
+        android:text="Save to Storage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonAddFlight"
+        tools:ignore="HardcodedText" />
+
+    <Button
         android:id="@+id/buttonSearchPage"
-        android:onClick="GoToSearchPage"
-        android:text="Search Page"
         style="@style/ButtonStyle"
         android:layout_marginTop="20dp"
+        android:onClick="GoToSearchPage"
+        android:text="Search Page"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonAddFlight"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
