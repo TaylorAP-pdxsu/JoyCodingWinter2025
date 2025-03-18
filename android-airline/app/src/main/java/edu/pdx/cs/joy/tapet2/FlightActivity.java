@@ -85,15 +85,6 @@ public class FlightActivity extends AppCompatActivity {
                             , (dialog, which) -> dialog.dismiss())
                     .show();
         }
-
-        //ListView/adapter example
-        /*
-        this.sums = new ArrayAdapter<>(this
-            , android.R.layout.simple_list_item_1, new ArrayList<>());
-        ListView listView = findViewById(R.id.sums);
-        listView.setAdapter(this.sums);
-         */
-
     }
 
     public void SaveAirline_OnButtonClick(View view) {
@@ -107,7 +98,7 @@ public class FlightActivity extends AppCompatActivity {
     }
 
     private void SaveAirline() {
-        File dataDir = this.getDataDir();
+        File dataDir = this.getFilesDir();
         File xmlFile = new File(dataDir, "airline.xml");
         try (PrintWriter pw = new PrintWriter(new FileWriter(xmlFile))) {
             XmlDumper dumper = new XmlDumper(pw);
@@ -120,5 +111,10 @@ public class FlightActivity extends AppCompatActivity {
                             , (dialog, which) -> dialog.dismiss())
                     .show();
         }
+        new AlertDialog.Builder(this)
+                .setTitle("Successfully Saved!")
+                .setPositiveButton("OK"
+                        , (dialog, which) -> dialog.dismiss())
+                .show();
     }
 }
