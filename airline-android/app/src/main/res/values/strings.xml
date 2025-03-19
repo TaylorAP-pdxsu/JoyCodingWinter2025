@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Airline</string>
+    <string name="airline_resources">Airline Project</string>
+    <string name="README">
+        Taylor A. Pettingill
+        Project 6
+        This is a README for project 6. This project runs on a Pixel 5 Emulator.
+        Press the Launch button to begin the application. There you can add
+        flights and airlines, as well as search for flights. Enjoy!
+    </string>
+    <string name="FlightEntryStr">
+        <![CDATA[Add a flight by filling in the form below and pressing the
+        <Add Flight> button below]]>
+    </string>
+    <string name="Help">
+         <![CDATA[
+         \n- Press <Save To Storage> if you would like to save to your local Android storage
+         \n\n- Press <Search Airline> if you would like to search for a particular flight
+         \n\n- Press <View Airline> if you would like to see all the flights you have added
+         \n\n\n\n\t\t\t\t\t\tHaving trouble filling out the form?
+         \n\n- Airline can contain any combonation of letters/numbers
+         \n\n- Departure and Arrival codes can only be 3 digits long and only contain letters
+         \n\n- Date/Time is in format MM/DD/YYYY HH:MM <AM or PM>
+         ]]>
+    </string>
+    
+</resources>
