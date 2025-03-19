@@ -12,22 +12,22 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/red_bg"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="Search for Flights"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/red_bg"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.05"
+        tools:ignore="HardcodedText" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/editAirline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -44,7 +44,7 @@
         tools:ignore="HardcodedText" />
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/editSrcAirport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
@@ -56,16 +56,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText"
+        app:layout_constraintTop_toBottomOf="@+id/editAirline"
         tools:ignore="HardcodedText" />
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/editDestAirport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:hint="Departure Airport"
+        android:hint="Destination Airport"
         android:inputType="text"
         android:textColor="@color/white"
         android:textColorHint="@color/light_grey"
@@ -73,21 +73,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2"
+        app:layout_constraintTop_toBottomOf="@+id/editSrcAirport"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="HardcodedText" />
 
     <Button
-        android:id="@+id/buttonAddFlight2"
+        android:id="@+id/buttonSearchFlights"
         style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search Flights"
+        android:onClick="SearchFlights_OnClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4"
+        app:layout_constraintTop_toBottomOf="@+id/editDestAirport"
         app:layout_constraintVertical_bias="0.114"
+        tools:ignore="HardcodedText" />
+
+    <ListView
+        android:id="@+id/flightsView"
+        android:layout_width="314dp"
+        android:layout_height="265dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSearchFlights" />
+
+    <Button
+        android:id="@+id/buttonBackToAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ButtonStyle"
+        android:text="Return to Add Flights"
+        android:onClick="BackToAddFlightPage_OnButtonClick"
+        app:layout_constraintBottom_toTopOf="@+id/editAirline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

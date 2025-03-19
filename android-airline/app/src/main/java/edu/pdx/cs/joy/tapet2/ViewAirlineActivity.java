@@ -1,8 +1,10 @@
 package edu.pdx.cs.joy.tapet2;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
@@ -36,7 +38,7 @@ public class ViewAirlineActivity extends AppCompatActivity {
             return insets;
         });
         try {
-            XmlParser parser = new XmlParser(new FileReader(new File(this.getFilesDir(), "airline.xml")));
+            TextParser parser = new TextParser(new FileReader(new File(this.getFilesDir(), "airline.txt")));
             airline = parser.parse();
         } catch (FileNotFoundException e) {
             new AlertDialog.Builder(this)
@@ -57,7 +59,14 @@ public class ViewAirlineActivity extends AppCompatActivity {
         if(airline != null) {
             ((TextView) findViewById(R.id.PageTitle)).setText(airline.getName());
             this.flightAdapter =
-                    new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, airline.getFlights());
+                    new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, airline.getFlights()) {
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            View view = super.getView(position, convertView, parent);
+                            TextView textView = (TextView) view.findViewById(android.R.id.text1);
+                            textView.setTextColor(Color.WHITE);
+                            return view;
+                        }
+                    };
             ListView listView = findViewById(R.id.airlineView);
             listView.setAdapter(this.flightAdapter);
         }

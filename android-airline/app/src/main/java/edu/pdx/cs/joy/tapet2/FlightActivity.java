@@ -14,6 +14,8 @@ import androidx.core.view.WindowInsetsCompat;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.File;
@@ -35,11 +37,35 @@ public class FlightActivity extends AppCompatActivity {
             return insets;
         });
 
-        airline = null;
         parser = new FlightParser();
+        File textFile = new File(this.getFilesDir(), "airline.txt");
+        if(!textFile.exists()) {
+            airline = null;
+        }
+        else {
+            try {
+                TextParser parser = new TextParser(new FileReader(new File(this.getFilesDir(), "airline.txt")));
+                airline = parser.parse();
+            } catch (FileNotFoundException e) {
+                new AlertDialog.Builder(this)
+                        .setTitle("File Not Found Exception")
+                        .setMessage(e.getMessage())
+                        .setPositiveButton("OK"
+                                , (dialog, which) -> dialog.dismiss())
+                        .show();
+            } catch (ParserException e) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Parser Exception")
+                        .setMessage(e.getMessage())
+                        .setPositiveButton("OK"
+                                , (dialog, which) -> dialog.dismiss())
+                        .show();
+            }
+        }
     }
 
     public void GoToSearchPage(View view) {
+        SaveAirline();
         Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
@@ -89,6 +115,11 @@ public class FlightActivity extends AppCompatActivity {
 
     public void SaveAirline_OnButtonClick(View view) {
         SaveAirline();
+        new AlertDialog.Builder(this)
+                .setTitle("Successfully Saved!")
+                .setPositiveButton("OK"
+                        , (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     public void ViewAirlinePage_OnButtonClick(View view) {
@@ -99,9 +130,9 @@ public class FlightActivity extends AppCompatActivity {
 
     private void SaveAirline() {
         File dataDir = this.getFilesDir();
-        File xmlFile = new File(dataDir, "airline.xml");
-        try (PrintWriter pw = new PrintWriter(new FileWriter(xmlFile))) {
-            XmlDumper dumper = new XmlDumper(pw);
+        File textFile = new File(dataDir, "airline.txt");
+        try (PrintWriter pw = new PrintWriter(new FileWriter(textFile))) {
+            TextDumper dumper = new TextDumper(pw);
             dumper.dump(this.airline);
         } catch (IOException e) {
             new AlertDialog.Builder(this)
@@ -111,10 +142,10 @@ public class FlightActivity extends AppCompatActivity {
                             , (dialog, which) -> dialog.dismiss())
                     .show();
         }
-        new AlertDialog.Builder(this)
-                .setTitle("Successfully Saved!")
-                .setPositiveButton("OK"
-                        , (dialog, which) -> dialog.dismiss())
-                .show();
+    }
+
+    public void ShowHelp_OnButtonClick(View view) {
+        Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
     }
 }
